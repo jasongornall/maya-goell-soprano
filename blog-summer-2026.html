@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?t=1794757748">
+<link rel="stylesheet" href="style.css?t=1794758616">
 </head>
 <body>
 
@@ -31,13 +31,18 @@
        The Blog landing page (blog.html) links here with its
        Read More. -->
 
-  <article class="post">
+  <!-- Like the Fall post: the date/author line sits above the
+       title ("Jul 7", no year), the section heads are bold
+       lead-in paragraphs rather than headings, and every
+       paragraph on the original is in the accent olive, which
+       the .post-accent class in style.css carries. -->
+  <article class="post post-accent">
+    <p class="post-date">Jul 7 &bull; Written by Maya Goell</p>
     <h1>Musical Musings and More [Summer 2026]</h1>
-    <p class="post-date">Sep 15, 2026 &middot; Written by Maya Goell</p>
 
     <p>Hey guys! I&rsquo;m trying something new here, a Quarterly newsletter for my friends and students. This is mostly to build community in my studio and keep my hoards of adoring fans (my mom and my mom&rsquo;s friends) up to date.</p>
 
-    <h3>Musical Musings</h3>
+    <p><strong>Musical Musings</strong></p>
     <p>I am happy to share that I was awarded the First Prize at the Virginia Hawk Vocal Awards last month. I spent a lovely day sharing music with old and new friends in a lovely hall.</p>
 
     <img src="assets/img/blog-hawk-awards.jpg" alt="Virginia Hawk Vocal Awards">
@@ -47,27 +52,32 @@
     <p>Speaking of the grind, in my quest to continue growing my studio, YOU can help. Yes, YOU! by leaving a review on my Google Business Profile, you can help me</p>
     <p><a class="button" href="https://www.google.com/search?sca_esv=2b321c93e850cbad&amp;kgmid=/g/11yjt9w0cs&amp;q=Studio+of+Maya+Goell&amp;shem=dlvs1,epsd1,ltae,rimspwouoe&amp;shndl=30&amp;source=sh/x/loc/uni/m1/1&amp;kgs=6ebb31ce7a7f32ab&amp;utm_source=dlvs1,epsd1,ltae,rimspwouoe,sh/x/loc/uni/m1/1#lrd=0x888367220093e0e9:0xc3b77dd5ee7367a4,3,,,,">Leave me a review</a></p>
 
-    <h3>Technical tips for students</h3>
+    <p><strong>Technical tips for students</strong></p>
 
-    <h3>Learning</h3>
-    <p>I&rsquo;m currently learning an entire opera, <em>Le Nozze di Figaro</em>. Almost three hours of me running around in Italian wearing a cute maid costume. The secret is that is is separated into four acts. each act is separated into a dozen or so scenes. Those scenes are further divided into sections, phrases, and notes. I keep dividing the music into manageable sections.</p>
-    <blockquote>&ldquo;God is in the details.&rdquo;<br>&mdash;Stephen Sondheim</blockquote>
+    <p><strong>Learning</strong></p>
+    <!-- On the original the Sondheim line is not a pull-quote; it
+         is the end of this paragraph, set off by line breaks. -->
+    <p>I&rsquo;m currently learning an entire opera, <em>Le Nozze di Figaro</em>. Almost three hours of me running around in Italian wearing a cute maid costume. The secret is that is is separated into four acts. each act is separated into a dozen or so scenes. Those scenes are further divided into sections, phrases, and notes. I keep dividing the music into manageable sections.<br><br>&ldquo;God is in the details.&rdquo;<br>-Stephen Sondheim</p>
 
-    <h3>Practicing</h3>
+    <p><strong>Practicing</strong></p>
     <p>Lately, I have been returning to Hannon&rsquo;s <em>The Virtuoso Pianist</em>. I&rsquo;m no virtuoso, but it helps... I like to return to a piece after a while to see how my technique has changed.</p>
     <p>Try playing or singing something that you haven&rsquo;t done in a while. does it feel different? What changed?</p>
 
-    <h3>Performing</h3>
+    <p><strong>Performing</strong></p>
     <p>In the trenches of competition season, the horrors persist yet so do I. Even though I will probably never enjoy competition per se, it&rsquo;s important for me to receive feedback from judges who have never heard from me before. They give me a fresh perspective and tips that I might not have thought of myself.</p>
     <p>Perform a piece for someone who has never heard you before and see if you can guess what they think!</p>
 
-    <h3>Come See Me Perform!</h3>
+    <p><strong>Come See Me Perform!</strong></p>
     <p>This August, I will be performing the role of Susanna in Mozart&rsquo;s magnum opus and my most favorite operas of all time, <em>Le Nozze di Figaro</em>! If you happen to be free on the last weekend of August, this is an outing. You will be hearing probably the most universally beloved operas in the repertoire sung by the best local talent. Obviously, I&rsquo;m highly biased but I&rsquo;m kind of working with a dream team for this one.</p>
     <p><a class="button" href="https://www.genesisoperatheatre.com/current-production">Check it out!</a></p>
 
     <p>If you have read this far into my newsletter, thank you so much for reading and I promise not to spam you!</p>
     <p>Maya Goell</p>
   </article>
+
+  <!-- The original ends a post with the other post's title as a
+       big link (its prev/next pagination). -->
+  <p class="post-pagination"><a href="blog-fall-2026.html">It&rsquo;s back to School! [Fall 2026]</a></p>
 
 </main>
 
