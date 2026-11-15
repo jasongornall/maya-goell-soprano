@@ -28,8 +28,8 @@ setTimeout(function () {
   }
 }, 2000);
 </script>
-<link rel="stylesheet" href="style.css?t=1794762000">
-<script src="animations.js?t=1794762000" defer></script>
+<link rel="stylesheet" href="style.css?t=1794763558">
+<script src="animations.js?t=1794763558" defer></script>
 </head>
 <body class="gallery-page">
 
@@ -68,23 +68,30 @@ setTimeout(function () {
        (A CSS-columns layout filled one column at a time and
        scrambled the visual order.) To add a photo: drop the
        file in assets/img/ and add its <img> line to whichever
-       column is shorter. -->
+       column is shorter.
+       Each photo also carries its true position in an --o
+       property. It does nothing at desktop width; at phone
+       width style.css dissolves the two columns and uses
+       these numbers to deal the photos back into 1-to-12
+       order in the single stacked column, so the phone order
+       matches the original's too. Keep the numbers in step
+       when adding or moving a photo. -->
   <div class="gallery-grid">
     <div class="gallery-col">
-      <img class="reveal reveal-fade" src="assets/img/au-secours.jpg" alt="Maya Goell performing on stage">
-      <img class="reveal reveal-fade" src="assets/img/dsc05728.jpg" alt="Maya Goell performance photo">
-      <img class="reveal reveal-fade" src="assets/img/mia-1547.jpg" alt="Maya Goell performance photo">
-      <img class="reveal reveal-fade" src="assets/img/img-4834.jpg" alt="Maya Goell performance photo">
-      <img class="reveal reveal-fade" src="assets/img/img-4707.jpg" alt="Maya Goell performance photo">
-      <img class="reveal reveal-fade" src="assets/img/img-4833.jpg" alt="Maya Goell performance photo">
+      <img class="reveal reveal-fade" style="--o:1" src="assets/img/au-secours.jpg" alt="Maya Goell performing on stage">
+      <img class="reveal reveal-fade" style="--o:3" src="assets/img/dsc05728.jpg" alt="Maya Goell performance photo">
+      <img class="reveal reveal-fade" style="--o:5" src="assets/img/mia-1547.jpg" alt="Maya Goell performance photo">
+      <img class="reveal reveal-fade" style="--o:7" src="assets/img/img-4834.jpg" alt="Maya Goell performance photo">
+      <img class="reveal reveal-fade" style="--o:9" src="assets/img/img-4707.jpg" alt="Maya Goell performance photo">
+      <img class="reveal reveal-fade" style="--o:11" src="assets/img/img-4833.jpg" alt="Maya Goell performance photo">
     </div>
     <div class="gallery-col">
-      <img class="reveal reveal-fade" src="assets/img/poncho-rabbit.jpg" alt="Poncho Rabbit production photo">
-      <img class="reveal reveal-fade" src="assets/img/mia-1151.jpg" alt="Maya Goell performance photo">
-      <img class="reveal reveal-fade" src="assets/img/mia-1695.jpg" alt="Maya Goell performance photo">
-      <img class="reveal reveal-fade" src="assets/img/img-4708.jpg" alt="Maya Goell performance photo">
-      <img class="reveal reveal-fade" src="assets/img/img-4705.jpg" alt="Maya Goell performance photo">
-      <img class="reveal reveal-fade" src="assets/img/img-4709.jpg" alt="Maya Goell performance photo">
+      <img class="reveal reveal-fade" style="--o:2" src="assets/img/poncho-rabbit.jpg" alt="Poncho Rabbit production photo">
+      <img class="reveal reveal-fade" style="--o:4" src="assets/img/mia-1151.jpg" alt="Maya Goell performance photo">
+      <img class="reveal reveal-fade" style="--o:6" src="assets/img/mia-1695.jpg" alt="Maya Goell performance photo">
+      <img class="reveal reveal-fade" style="--o:8" src="assets/img/img-4708.jpg" alt="Maya Goell performance photo">
+      <img class="reveal reveal-fade" style="--o:10" src="assets/img/img-4705.jpg" alt="Maya Goell performance photo">
+      <img class="reveal reveal-fade" style="--o:12" src="assets/img/img-4709.jpg" alt="Maya Goell performance photo">
     </div>
   </div>
 
@@ -94,11 +101,10 @@ setTimeout(function () {
        the live page). youtube-nocookie is YouTube's
        privacy-enhanced host; the videos themselves are the same. -->
   <h2 class="center video-title reveal">Video Gallery</h2>
-  <!-- Each video sits in a .video-frame with the original's
-       rendered shape (about 940 by 355px, flatter than the
-       video's own 16:9; see style.css). The reveal class is on
-       the frame, not the iframe, so the reveal's transform
-       never fights the iframe's centering one. -->
+  <!-- Each video sits in a .video-frame with the shape the
+       original renders, true 16:9 (see style.css). The reveal
+       class is on the frame, not the iframe, so the reveal's
+       transform never fights the iframe's own layout. -->
   <div class="video-grid">
     <div class="video-frame reveal"><iframe src="https://www.youtube-nocookie.com/embed/psEn3e1jcck" title="Non Monsieur Mon Mari- Les Mamelles des Theresias" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
     <div class="video-frame reveal"><iframe src="https://www.youtube-nocookie.com/embed/wPABymC_z4g" title="Presentation of the Rose from Der Rosenkavalier by Strauss" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
