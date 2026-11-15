@@ -9,7 +9,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?t=1794757402">
+<!-- Cloudflare Turnstile, the same spam protection the original
+     Squarespace form uses. The widget itself renders inside the
+     form below; this script is what draws it. -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<link rel="stylesheet" href="style.css?t=1794757748">
 </head>
 <body>
 
@@ -47,21 +51,67 @@
     <div class="side-by-side">
       <img class="side-photo" src="assets/img/dsc05728.jpg" alt="Maya Goell performance photo">
       <div class="side-main">
-        <!-- PLACEHOLDER: The live Squarespace page collects messages
-             through a Squarespace form, and a static site cannot run
-             a form by itself (there is no server to receive it). The
-             live site shows no email address, so none is invented
-             here. To finish this page, either:
-               1. add Maya's real email as a mailto: link below, or
-               2. sign up for a free form service (e.g. Formspree) and
-                  paste its form markup here.
-             Until then, visitors are pointed at her social profiles,
-             which are the contact routes the live site does publish. -->
-        <p>The fastest way to reach Maya right now is through her social profiles:</p>
-        <p>
-          <a class="button" href="https://www.instagram.com/maya_goell_/">Instagram</a>
-          <a class="button" href="https://www.facebook.com/maya.goell">Facebook</a>
-        </p>
+        <!-- The contact form, with the same fields in the same
+             order as the original Squarespace form. It posts to
+             the small Cloudflare Worker in this repo's worker/
+             folder (see worker/README.md): the Worker checks the
+             submission for spam, saves it in a database so it can
+             never be lost, and emails it to Maya, duplicating
+             what the Squarespace form did.
+             Backup route: if the form ever fails, the social
+             profiles in the footer below still reach Maya. -->
+        <form id="contact-form" class="contact-form">
+          <div class="form-row">
+            <div class="form-field">
+              <label for="cf-first">First Name *</label>
+              <input id="cf-first" name="firstName" type="text" required autocomplete="given-name">
+            </div>
+            <div class="form-field">
+              <label for="cf-last">Last Name *</label>
+              <input id="cf-last" name="lastName" type="text" required autocomplete="family-name">
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="cf-email">Email *</label>
+            <input id="cf-email" name="email" type="email" required autocomplete="email">
+          </div>
+          <div class="form-check">
+            <input id="cf-news" name="newsletter" type="checkbox">
+            <label for="cf-news">Sign up for news and updates</label>
+          </div>
+          <div class="form-field">
+            <label for="cf-phone">Phone</label>
+            <input id="cf-phone" name="phone" type="tel" autocomplete="tel">
+          </div>
+          <div class="form-field">
+            <label for="cf-message">Message *</label>
+            <textarea id="cf-message" name="message" rows="5" required></textarea>
+          </div>
+          <!-- Honeypot: a field humans never see. It sits
+               off-screen, is hidden from assistive technology
+               (aria-hidden), and is out of the tab order, so
+               people leave it empty. Form-filling bots fill
+               every field they find, and the Worker silently
+               drops submissions where this one is not empty. -->
+          <div class="hp-field" aria-hidden="true">
+            <label>Website <input name="website" type="text" tabindex="-1" autocomplete="off"></label>
+          </div>
+          <!-- Turnstile widget. The site key in data-sitekey is
+               public by design (every visitor's browser needs
+               it); the matching secret lives only on the Worker,
+               which verifies the widget's token server-side. If
+               the widget cannot load (offline, ad blocker), the
+               form still submits without a token and the
+               Worker's honeypot and timing checks decide. -->
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAAGCGCmZhGCLCpM3c"></div>
+          <p><button class="button" type="submit">Submit</button></p>
+          <p class="form-error" id="form-error" hidden></p>
+        </form>
+        <!-- Shown in place of the form after a successful send. -->
+        <div id="form-thanks" hidden>
+          <h2>Thank you!</h2>
+          <p>Your message has been sent. Maya will be in touch shortly.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -73,6 +123,75 @@
   <a href="https://www.linkedin.com/company/squarespace">LinkedIn</a>
   <a href="https://www.facebook.com/maya.goell">Facebook</a>
 </footer>
+
+<script>
+// The contact form's small script. It sends the form to the
+// Cloudflare Worker with fetch() instead of a plain form post,
+// so the visitor stays on this page and sees the thank-you in
+// place. Plain vanilla JS, no libraries.
+(function () {
+  // CONFIG: where the form posts. The Worker is this repo's
+  // worker/ folder, live at this address; see worker/README.md.
+  var WORKER_URL = "https://maya-goell-contact.gornall-jason.workers.dev";
+
+  var form = document.getElementById("contact-form");
+  var thanks = document.getElementById("form-thanks");
+  var errorLine = document.getElementById("form-error");
+
+  // Stamp the moment the form appeared on screen. The Worker
+  // drops submissions that come back impossibly fast, which is
+  // what a bot replaying the endpoint looks like; a person
+  // needs a few seconds just to type their name.
+  var startedAt = Date.now();
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    errorLine.hidden = true;
+
+    // When the Turnstile widget loaded, it leaves its token in
+    // a hidden field it manages. If it never loaded (offline,
+    // ad blocker), there is no token; we send without one and
+    // the Worker's other checks decide, so a real visitor is
+    // not locked out by a broken widget.
+    var tokenField = form.querySelector('[name="cf-turnstile-response"]');
+
+    var payload = {
+      firstName: form.elements["firstName"].value.trim(),
+      lastName: form.elements["lastName"].value.trim(),
+      email: form.elements["email"].value.trim(),
+      phone: form.elements["phone"].value.trim(),
+      message: form.elements["message"].value.trim(),
+      newsletter: form.elements["newsletter"].checked,
+      website: form.elements["website"].value,
+      formStartedAt: startedAt,
+      turnstileToken: tokenField ? tokenField.value : ""
+    };
+
+    fetch(WORKER_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    })
+      .then(function (resp) { return resp.json(); })
+      .then(function (result) {
+        if (result.ok) {
+          form.hidden = true;
+          thanks.hidden = false;
+        } else {
+          errorLine.textContent =
+            result.error || "Something went wrong. Please try again.";
+          errorLine.hidden = false;
+        }
+      })
+      .catch(function () {
+        errorLine.textContent =
+          "The message could not be sent. Please try again, " +
+          "or reach Maya through the social links below.";
+        errorLine.hidden = false;
+      });
+  });
+})();
+</script>
 
 </body>
 </html>
