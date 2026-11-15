@@ -28,8 +28,8 @@ setTimeout(function () {
   }
 }, 2000);
 </script>
-<link rel="stylesheet" href="style.css?t=1794769662">
-<script src="animations.js?t=1794769662" defer></script>
+<link rel="stylesheet" href="style.css?t=1794771362">
+<script src="animations.js?t=1794771362" defer></script>
 </head>
 <body class="post-page">
 
@@ -69,26 +69,39 @@ setTimeout(function () {
     <p class="post-date reveal">Sep 15 &ndash; Written by Maya Goell</p>
     <h1 class="reveal">Musical Musings and More [Summer 2026]</h1>
 
-    <p class="reveal">Hey guys! I&rsquo;m trying something new here, a Quarterly newsletter for my friends and students. This is mostly to build community in my studio and keep my hoards of adoring fans (my mom and my mom&rsquo;s friends) up to date.</p>
+    <!-- On the original this intro paragraph ends with a
+         line break, leaving one blank line under the text
+         before the "Musical Musings" head; the <br> at the
+         end of the paragraph reproduces that blank line. -->
+    <p class="reveal">Hey guys! I&rsquo;m trying something new here, a Quarterly newsletter for my friends and students. This is mostly to build community in my studio and keep my hoards of adoring fans (my mom and my mom&rsquo;s friends) up to date.<br></p>
 
     <p class="reveal"><strong>Musical Musings</strong></p>
-    <p class="reveal">I am happy to share that I was awarded the First Prize at the Virginia Hawk Vocal Awards last month. I spent a lovely day sharing music with old and new friends in a lovely hall.</p>
-
-    <p class="reveal">I can&rsquo;t lie, I&rsquo;m not the best at competing. I don&rsquo;t know why, but I get way more nervous doing competitions than auditions or even performing, so I was very happy with how I did. I&rsquo;m even more excited to invest that prize money in some new recordings for the next audition season.</p>
-    <p class="reveal">The grind never ends!</p>
+    <!-- On the original the next three runs are ONE
+         paragraph, separated by blank lines (<br><br> in
+         its markup): the award announcement, the "I can't
+         lie" reflection, and its "The grind never ends!"
+         tail. They are one paragraph here too, on purpose:
+         a blank line inside a paragraph is taller than the
+         gap between two paragraphs, and a round-10
+         comparison measured the stack above the photo
+         running some 35-75px tighter here than there when
+         they were separate paragraphs. -->
+    <p class="reveal">I am happy to share that I was awarded the First Prize at the Virginia Hawk Vocal Awards last month. I spent a lovely day sharing music with old and new friends in a lovely hall.<br><br>I can&rsquo;t lie, I&rsquo;m not the best at competing. I don&rsquo;t know why, but I get way more nervous doing competitions than auditions or even performing, so I was very happy with how I did. I&rsquo;m even more excited to invest that prize money in some new recordings for the next audition season.<br><br>The grind never ends!</p>
 
     <!-- On the original this photo comes AFTER the "I can't
          lie" paragraph and its "The grind never ends!" tail
          (checked in its markup's block order), not right
          after the award announcement, where an earlier pass
-         put it. The grind line is the tail of that paragraph
-         there, set off by line breaks; here it is its own
-         paragraph, which renders the same. The photo's file
-         is the original's full image (940x788, the exact
-         dimensions its markup records), but the original's
-         block crops it into a wide frame (about 915 by 475
-         rendered, center focal point), which the .hawk-photo
-         rule in style.css reproduces. -->
+         put it. It renders there at its full natural shape:
+         the block is marked data-stretch="false", its frame
+         is padded to exactly the file's own 788/940 shape,
+         and the caption element under it is empty (the
+         "Maya Goell Soprano" line under the portrait is
+         printed inside the graphic itself). A round-9 pass
+         cropped it into a wide frame on screenshot readings
+         and sliced the graphic's script header off the top;
+         round 10 checked the markup and the crop came off.
+         See the hawk-photo note in style.css. -->
     <img class="reveal hawk-photo" src="assets/img/blog-hawk-awards.jpg" alt="Virginia Hawk Vocal Awards">
 
     <p class="reveal">Speaking of the grind, in my quest to continue growing my studio, YOU can help. Yes, YOU! by leaving a review on my Google Business Profile, you can help me</p>
