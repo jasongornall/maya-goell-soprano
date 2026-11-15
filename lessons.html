@@ -9,11 +9,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?t=1794757748">
+<link rel="stylesheet" href="style.css?t=1794758616">
 </head>
 <body>
 
-<header>
+<!-- hdr-bold: this page's header starts with the pale sage nav
+     of the original's "bold" section theme (see style.css). -->
+<header class="hdr-bold">
   <div class="site-title"><a href="index.html">Maya Goell Soprano</a></div>
   <nav>
     <a href="index.html">Bio</a>
@@ -34,7 +36,7 @@
 
   <div class="side-by-side">
     <img class="side-photo" src="assets/img/lessons-hero.jpg" alt="Music lessons">
-    <div class="side-main">
+    <div class="side-main lessons-intro">
       <p>Looking for a music teacher in San Diego, California? Based in La Jolla, Maya Goell teaches voice, piano, and music theory at all levels.</p>
       <p><a class="button" href="contact.html">Get in touch and book a trial lesson!</a></p>
     </div>
@@ -42,7 +44,10 @@
 
   <!-- On the original the FAQ heading and questions are small:
        questions are plain bold text, not large headings, so they
-       are <p> tags with the .faq-q style here. -->
+       are <p> tags with the .faq-q style here. The whole block,
+       answers included, is in the accent olive there, which the
+       .faq wrapper carries. -->
+  <div class="faq">
   <h2 class="faq-heading">FAQ&rsquo;s</h2>
 
   <p class="faq-q">Am I old enough/ good enough/ talented enough to study music?</p>
@@ -59,13 +64,29 @@
 
   <p class="faq-q">What kinds of music do you teach?</p>
   <p>My wheelhouse is definitely classical style. I have been performing professionally for years, and classically training for more than a decade. That being said, I also have professional experience in a multitude of styles including pop, jazz, and musical theater.</p>
+  </div>
 
-  <img class="hero-img" src="assets/img/lessons-decor-1.jpg" alt="">
-  <img class="hero-img" src="assets/img/lessons-decor-2.jpg" alt="">
-
-  <h2>What to expect</h2>
-  <p>Depending on level and instrument, I like to spend about half the session doing warm-ups and technical patterns and the second half developing repertoire.</p>
-  <p>This strikes the perfect balance between discipline and creative exploration. Plus, students will leave lessons with a body of work they can take anywhere from the practice room to auditions to concerts!</p>
+  <!-- "What to expect" zigzags on the original: the first
+       paragraph sits at the left with a photo at its right, then
+       a photo at the left with the second paragraph at its
+       right. The two photos are the same two that used to stand
+       full-width above this section. Which of the remake's two
+       decor files is which: on the original the right-hand photo
+       comes first in the page's markup, so the files are placed
+       in that same order here (decor-2 right, decor-1 left). -->
+  <h2 class="expect-heading">What to expect</h2>
+  <div class="side-by-side expect-row">
+    <div class="side-main">
+      <p>Depending on level and instrument, I like to spend about half the session doing warm-ups and technical patterns and the second half developing repertoire.</p>
+    </div>
+    <img class="side-photo" src="assets/img/lessons-decor-2.jpg" alt="">
+  </div>
+  <div class="side-by-side expect-row">
+    <img class="side-photo" src="assets/img/lessons-decor-1.jpg" alt="">
+    <div class="side-main">
+      <p>This strikes the perfect balance between discipline and creative exploration. Plus, students will leave lessons with a body of work they can take anywhere from the practice room to auditions to concerts!</p>
+    </div>
+  </div>
 
 </main>
 
