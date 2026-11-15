@@ -32,8 +32,8 @@ setTimeout(function () {
   }
 }, 2000);
 </script>
-<link rel="stylesheet" href="style.css?t=1794764981">
-<script src="animations.js?t=1794764981" defer></script>
+<link rel="stylesheet" href="style.css?t=1794766089">
+<script src="animations.js?t=1794766089" defer></script>
 </head>
 <!-- contact-page + hdr-dark: on the original this page's header
      floats over the hero photo with cream text (its "black"
@@ -132,7 +132,14 @@ setTimeout(function () {
           </div>
           <div class="form-field">
             <label for="cf-message">Message (required)</label>
-            <textarea id="cf-message" name="message" rows="5" required></textarea>
+            <!-- rows=3, not the roomier 5 an earlier pass used:
+                 the original's message box is short (a round-6
+                 comparison measured the run from its label to
+                 the Submit button at about 140px against about
+                 190px here), and two fewer rows take out almost
+                 exactly the extra 50px. Presentational only:
+                 same field, name and validation. -->
+            <textarea id="cf-message" name="message" rows="3" required></textarea>
           </div>
           <!-- Honeypot: a field humans never see. It sits
                off-screen, is hidden from assistive technology
