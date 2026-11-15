@@ -18,14 +18,17 @@ import { EmailMessage } from "cloudflare:email";
 // CONFIG — the one place to change things.
 // ============================================================
 
-// Maya's inbox: where form submissions get emailed.
-// EMPTY FOR NOW on purpose. While it is empty the Worker still
-// saves every submission in the database, it just does not send
-// email yet. When Maya confirms her address: (1) the address
-// must be verified as a destination in this Cloudflare account's
-// Email Routing (Cloudflare emails her a one-click verification),
-// (2) put the address here, (3) redeploy (see worker/README.md).
-const DESTINATION_EMAIL = "";
+// Where form submissions get emailed. For now this is Jason's
+// own inbox, so the whole chain can be tested end to end before
+// Maya's address is involved. Email only actually sends once
+// this address exists as a VERIFIED destination in this
+// Cloudflare account's Email Routing (Cloudflare emails a
+// one-click verification link when the destination is added);
+// until then the Worker still saves every submission in the
+// database, it just leaves the row marked un-emailed. When Maya
+// confirms her address: verify it the same way, swap it in
+// here, redeploy (see worker/README.md).
+const DESTINATION_EMAIL = "gornall.jason@gmail.com";
 
 // The "From" address on the notification email. It must sit on
 // a domain that has Email Routing enabled in this Cloudflare
