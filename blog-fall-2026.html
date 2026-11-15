@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="post-page">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,10 +28,10 @@ setTimeout(function () {
   }
 }, 2000);
 </script>
-<link rel="stylesheet" href="style.css?t=1794763558">
-<script src="animations.js?t=1794763558" defer></script>
+<link rel="stylesheet" href="style.css?t=1794764981">
+<script src="animations.js?t=1794764981" defer></script>
 </head>
-<body>
+<body class="post-page">
 
 <header>
   <div class="site-title"><a href="index.html">Maya Goell Soprano</a></div>
@@ -56,25 +56,32 @@ setTimeout(function () {
        where it sits at /blog-1-1/fall-2026-newsletter. The Blog
        landing page (blog.html) links here with its Read More. -->
 
-  <!-- On the original the TITLE comes first and the
-       date/author line sits UNDER it ("Sep 15 – Written by
-       Maya Goell", with an en dash; the date shows just
-       "Sep 15", no year), and a wide gap follows before the
-       post body (see .post-date in style.css). The section
-       heads inside the post are bold text, not headings:
-       "Autumn Newsletter" stands alone, and each of the
-       others stands on its own centered line above the
-       paragraph it introduces, which a <br> pair inside the
-       paragraph reproduces from the original's own markup. -->
+  <!-- On the rendered original the date/author line sits
+       ABOVE the title ("Sep 15 – Written by Maya Goell",
+       with an en dash; the date shows just "Sep 15", no
+       year), and a wide gap follows the title before the
+       post body (see .post in style.css). An earlier pass
+       put the title first, following the original's markup
+       order; the round-5 visual comparison showed the
+       rendered page has them the other way around, and
+       rendered wins. The section heads inside the post are
+       bold text, not headings: "Autumn Newsletter" stands
+       alone, and each of the others stands on its own
+       centered line above the paragraph it introduces,
+       which a <br> pair inside the paragraph reproduces
+       from the original's own markup. -->
   <article class="post">
-    <h1 class="reveal">It&rsquo;s back to School![Fall 2026]</h1>
     <p class="post-date reveal">Sep 15 &ndash; Written by Maya Goell</p>
+    <h1 class="reveal">It&rsquo;s back to School![Fall 2026]</h1>
 
     <p class="reveal"><strong>Autumn Newsletter</strong></p>
     <p class="reveal">The summer flew by and just like that, it&rsquo;s my favorite season. Even though the weather is pretty much the same, I get to enjoy pumpkin spiced everything, the opera season is about to start, and all my beloved students come back from their summer adventures!</p>
     <p class="reveal">I had a magical time singing my all-time dream role of Susannah in Mozart&rsquo;s <em>Le Nozze di Figaro</em>. I love how funny she is, always playing tricks on the other characters, and she gets a happy ending. Enjoy these fake wedding pictures!</p>
 
-    <img class="reveal" src="assets/img/blog-figaro.jpg" alt="Maya Goell as Susanna in Le Nozze di Figaro">
+    <!-- The img-gap class gives this photo the original's
+         wide air above it (see .post img.img-gap in
+         style.css). -->
+    <img class="reveal img-gap" src="assets/img/blog-figaro.jpg" alt="Maya Goell as Susanna in Le Nozze di Figaro">
 
     <p class="reveal"><strong>Win two free tickets to my SDO Solo debut</strong><br><br>Follow the link below to write me a positive review on Google business and enter a raffle to win two tickets to <em>Rigoletto</em> this October!</p>
     <!-- On the original this is a plain underlined text link
