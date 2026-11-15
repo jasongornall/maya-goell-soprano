@@ -79,4 +79,24 @@ window.mayaRevealReady = true;
     window.addEventListener("scroll", settle, { passive: true });
     settle();
   }
+
+  // ----- Mobile menu -----
+  // At phone widths the header's nav collapses behind the
+  // hamburger button, like the original's Squarespace menu
+  // (see "Mobile navigation" in style.css). Same pattern as
+  // everything else in this file: the script only flips a
+  // class (.nav-open on the header) and keeps the button's
+  // aria-expanded honest; the panel's opening motion is a CSS
+  // transition. The button is only ever shown when JavaScript
+  // is on (style.css displays it under .js-reveal), so this
+  // listener is the only way it can be needed; with
+  // JavaScript off, no button appears and the nav simply
+  // shows its links stacked.
+  var navToggle = document.querySelector(".nav-toggle");
+  if (header && navToggle) {
+    navToggle.addEventListener("click", function () {
+      var open = header.classList.toggle("nav-open");
+      navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  }
 })();
