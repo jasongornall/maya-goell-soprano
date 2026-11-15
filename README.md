@@ -12,8 +12,10 @@ No frameworks, no build step: what you see in the files is what ships.
 - `events.json` — the events shown in that month grid; see "Updating the calendar" below
 - `lessons.html` — Music Lessons info and FAQ
 - `blog.html` — the blog/newsletter posts, rendered as static articles
-- `contact.html` — contact page (see the placeholder note inside the file:
-  the Squarespace form cannot run on a static site)
+- `contact.html` — contact page with a working form; the form posts
+  to the Cloudflare Worker in `worker/` (see `worker/README.md`)
+- `worker/` — the small Cloudflare Worker that receives the contact
+  form, saves submissions in a D1 database, and emails them to Maya
 - `style.css` — the one shared stylesheet for every page
 - `assets/img/` — all photos, downloaded from the live site and resized
 
@@ -70,9 +72,12 @@ updating itself as before.
 
 ## Known differences from the Squarespace site
 
-- The contact form cannot be replicated statically; the contact page
-  points to her Instagram/Facebook until a real email or a form
-  service (e.g. Formspree) is added. See the comment in `contact.html`.
+- The contact form runs on a small Cloudflare Worker (the `worker/`
+  folder) instead of Squarespace: it saves every submission in a
+  database and emails it to Maya, protected by Cloudflare
+  Turnstile like the original form. Email delivery switches on
+  once Maya's destination address is confirmed; until then
+  submissions are saved and waiting. See `worker/README.md`.
 - Squarespace commerce (`/cart`) is not part of this remake.
 - The footer includes the same LinkedIn link as the original's
   footer, in the same order (Instagram, LinkedIn, Facebook). Note
