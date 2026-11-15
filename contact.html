@@ -32,8 +32,8 @@ setTimeout(function () {
   }
 }, 2000);
 </script>
-<link rel="stylesheet" href="style.css?t=1794759662">
-<script src="animations.js?t=1794759662" defer></script>
+<link rel="stylesheet" href="style.css?t=1794760291">
+<script src="animations.js?t=1794760291" defer></script>
 </head>
 <!-- contact-page + hdr-dark: on the original this page's header
      floats over the hero photo with cream text (its "black"
@@ -60,8 +60,15 @@ setTimeout(function () {
 
   <!-- Full-bleed hero: the opera-house photo edge to edge, with
        the heading and intro text overlaid on it in white,
-       centered, as on the original. -->
-  <section class="contact-hero reveal">
+       centered, as on the original. This section deliberately
+       does NOT carry the .reveal class the other blocks use:
+       it is the top of the page, its text is white, and a
+       visual comparison caught it mid-fade with the white
+       heading invisible against the cream page. The hero is
+       simply there, and style.css also gives the section the
+       photo's own dark tone as a background so the white text
+       stays legible even if the photo itself is slow. -->
+  <section class="contact-hero">
     <img src="assets/img/contact-hero.jpg" alt="">
     <div class="contact-hero-text">
       <h1>Let&rsquo;s work together</h1>
@@ -72,7 +79,10 @@ setTimeout(function () {
   <div class="wrap">
     <!-- Below the hero, like the original: the performance photo
          at the left and the contact block at the right. -->
-    <div class="side-by-side">
+    <!-- .contact-row carries this row's measured proportions
+         from style.css: a wider photo, indented, so the form
+         starts where the original's form starts. -->
+    <div class="side-by-side contact-row">
       <img class="side-photo reveal" src="assets/img/dsc05728.jpg" alt="Maya Goell performance photo">
       <div class="side-main">
         <!-- The contact form, with the same fields in the same
@@ -85,18 +95,26 @@ setTimeout(function () {
              Backup route: if the form ever fails, the social
              profiles in the footer below still reach Maya. -->
         <form id="contact-form" class="contact-form reveal">
+          <!-- Label text matches the original's form exactly:
+               a "Name" group label above the First/Last pair,
+               and required fields marked "(required)" after
+               the name (Squarespace's format), not asterisks.
+               Only the words changed; the fields, their names,
+               order and required attributes are untouched, so
+               the submit script below is unaffected. -->
+          <p class="form-group-label">Name</p>
           <div class="form-row">
             <div class="form-field">
-              <label for="cf-first">First Name *</label>
+              <label for="cf-first">First Name (required)</label>
               <input id="cf-first" name="firstName" type="text" required autocomplete="given-name">
             </div>
             <div class="form-field">
-              <label for="cf-last">Last Name *</label>
+              <label for="cf-last">Last Name (required)</label>
               <input id="cf-last" name="lastName" type="text" required autocomplete="family-name">
             </div>
           </div>
           <div class="form-field">
-            <label for="cf-email">Email *</label>
+            <label for="cf-email">Email (required)</label>
             <input id="cf-email" name="email" type="email" required autocomplete="email">
           </div>
           <div class="form-check">
@@ -108,7 +126,7 @@ setTimeout(function () {
             <input id="cf-phone" name="phone" type="tel" autocomplete="tel">
           </div>
           <div class="form-field">
-            <label for="cf-message">Message *</label>
+            <label for="cf-message">Message (required)</label>
             <textarea id="cf-message" name="message" rows="5" required></textarea>
           </div>
           <!-- Honeypot: a field humans never see. It sits
