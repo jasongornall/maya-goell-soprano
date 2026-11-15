@@ -9,7 +9,27 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?t=1794758873">
+<!-- Animations, step one of two: this script runs before
+     anything on the page paints and flags the page as
+     "JavaScript is on". That flag is what lets style.css start
+     the .reveal blocks hidden (see the Motion section there);
+     without JavaScript the flag never appears and every block
+     simply shows, so nothing can be left invisible. Step two
+     is animations.js, loaded below, which watches the blocks
+     and reveals each as it scrolls into view. The setTimeout
+     is a safety net: if animations.js ever fails to load, the
+     flag comes back off and the page shows plainly instead of
+     staying hidden. -->
+<script>
+document.documentElement.classList.add("js-reveal");
+setTimeout(function () {
+  if (!window.mayaRevealReady) {
+    document.documentElement.classList.remove("js-reveal");
+  }
+}, 2000);
+</script>
+<link rel="stylesheet" href="style.css?t=1794759662">
+<script src="animations.js?t=1794759662" defer></script>
 </head>
 <body>
 
@@ -37,47 +57,47 @@
        paragraph on the original is in the accent olive, which
        the .post-accent class in style.css carries. -->
   <article class="post post-accent">
-    <p class="post-date">Jul 7 &bull; Written by Maya Goell</p>
-    <h1>Musical Musings and More [Summer 2026]</h1>
+    <p class="post-date reveal">Jul 7 &bull; Written by Maya Goell</p>
+    <h1 class="reveal">Musical Musings and More [Summer 2026]</h1>
 
-    <p>Hey guys! I&rsquo;m trying something new here, a Quarterly newsletter for my friends and students. This is mostly to build community in my studio and keep my hoards of adoring fans (my mom and my mom&rsquo;s friends) up to date.</p>
+    <p class="reveal">Hey guys! I&rsquo;m trying something new here, a Quarterly newsletter for my friends and students. This is mostly to build community in my studio and keep my hoards of adoring fans (my mom and my mom&rsquo;s friends) up to date.</p>
 
-    <p><strong>Musical Musings</strong></p>
-    <p>I am happy to share that I was awarded the First Prize at the Virginia Hawk Vocal Awards last month. I spent a lovely day sharing music with old and new friends in a lovely hall.</p>
+    <p class="reveal"><strong>Musical Musings</strong></p>
+    <p class="reveal">I am happy to share that I was awarded the First Prize at the Virginia Hawk Vocal Awards last month. I spent a lovely day sharing music with old and new friends in a lovely hall.</p>
 
-    <img src="assets/img/blog-hawk-awards.jpg" alt="Virginia Hawk Vocal Awards">
+    <img class="reveal" src="assets/img/blog-hawk-awards.jpg" alt="Virginia Hawk Vocal Awards">
 
-    <p>I can&rsquo;t lie, I&rsquo;m not the best at competing. I don&rsquo;t know why, but I get way more nervous doing competitions than auditions or even performing, so I was very happy with how I did. I&rsquo;m even more excited to invest that prize money in some new recordings for the next audition season.</p>
-    <p>The grind never ends!</p>
-    <p>Speaking of the grind, in my quest to continue growing my studio, YOU can help. Yes, YOU! by leaving a review on my Google Business Profile, you can help me</p>
-    <p><a class="button" href="https://www.google.com/search?sca_esv=2b321c93e850cbad&amp;kgmid=/g/11yjt9w0cs&amp;q=Studio+of+Maya+Goell&amp;shem=dlvs1,epsd1,ltae,rimspwouoe&amp;shndl=30&amp;source=sh/x/loc/uni/m1/1&amp;kgs=6ebb31ce7a7f32ab&amp;utm_source=dlvs1,epsd1,ltae,rimspwouoe,sh/x/loc/uni/m1/1#lrd=0x888367220093e0e9:0xc3b77dd5ee7367a4,3,,,,">Leave me a review</a></p>
+    <p class="reveal">I can&rsquo;t lie, I&rsquo;m not the best at competing. I don&rsquo;t know why, but I get way more nervous doing competitions than auditions or even performing, so I was very happy with how I did. I&rsquo;m even more excited to invest that prize money in some new recordings for the next audition season.</p>
+    <p class="reveal">The grind never ends!</p>
+    <p class="reveal">Speaking of the grind, in my quest to continue growing my studio, YOU can help. Yes, YOU! by leaving a review on my Google Business Profile, you can help me</p>
+    <p class="reveal"><a class="button" href="https://www.google.com/search?sca_esv=2b321c93e850cbad&amp;kgmid=/g/11yjt9w0cs&amp;q=Studio+of+Maya+Goell&amp;shem=dlvs1,epsd1,ltae,rimspwouoe&amp;shndl=30&amp;source=sh/x/loc/uni/m1/1&amp;kgs=6ebb31ce7a7f32ab&amp;utm_source=dlvs1,epsd1,ltae,rimspwouoe,sh/x/loc/uni/m1/1#lrd=0x888367220093e0e9:0xc3b77dd5ee7367a4,3,,,,">Leave me a review</a></p>
 
-    <p><strong>Technical tips for students</strong></p>
+    <p class="reveal"><strong>Technical tips for students</strong></p>
 
-    <p><strong>Learning</strong></p>
+    <p class="reveal"><strong>Learning</strong></p>
     <!-- On the original the Sondheim line is not a pull-quote; it
          is the end of this paragraph, set off by line breaks. -->
-    <p>I&rsquo;m currently learning an entire opera, <em>Le Nozze di Figaro</em>. Almost three hours of me running around in Italian wearing a cute maid costume. The secret is that is is separated into four acts. each act is separated into a dozen or so scenes. Those scenes are further divided into sections, phrases, and notes. I keep dividing the music into manageable sections.<br><br>&ldquo;God is in the details.&rdquo;<br>-Stephen Sondheim</p>
+    <p class="reveal">I&rsquo;m currently learning an entire opera, <em>Le Nozze di Figaro</em>. Almost three hours of me running around in Italian wearing a cute maid costume. The secret is that is is separated into four acts. each act is separated into a dozen or so scenes. Those scenes are further divided into sections, phrases, and notes. I keep dividing the music into manageable sections.<br><br>&ldquo;God is in the details.&rdquo;<br>-Stephen Sondheim</p>
 
-    <p><strong>Practicing</strong></p>
-    <p>Lately, I have been returning to Hannon&rsquo;s <em>The Virtuoso Pianist</em>. I&rsquo;m no virtuoso, but it helps... I like to return to a piece after a while to see how my technique has changed.</p>
-    <p>Try playing or singing something that you haven&rsquo;t done in a while. does it feel different? What changed?</p>
+    <p class="reveal"><strong>Practicing</strong></p>
+    <p class="reveal">Lately, I have been returning to Hannon&rsquo;s <em>The Virtuoso Pianist</em>. I&rsquo;m no virtuoso, but it helps... I like to return to a piece after a while to see how my technique has changed.</p>
+    <p class="reveal">Try playing or singing something that you haven&rsquo;t done in a while. does it feel different? What changed?</p>
 
-    <p><strong>Performing</strong></p>
-    <p>In the trenches of competition season, the horrors persist yet so do I. Even though I will probably never enjoy competition per se, it&rsquo;s important for me to receive feedback from judges who have never heard from me before. They give me a fresh perspective and tips that I might not have thought of myself.</p>
-    <p>Perform a piece for someone who has never heard you before and see if you can guess what they think!</p>
+    <p class="reveal"><strong>Performing</strong></p>
+    <p class="reveal">In the trenches of competition season, the horrors persist yet so do I. Even though I will probably never enjoy competition per se, it&rsquo;s important for me to receive feedback from judges who have never heard from me before. They give me a fresh perspective and tips that I might not have thought of myself.</p>
+    <p class="reveal">Perform a piece for someone who has never heard you before and see if you can guess what they think!</p>
 
-    <p><strong>Come See Me Perform!</strong></p>
-    <p>This August, I will be performing the role of Susanna in Mozart&rsquo;s magnum opus and my most favorite operas of all time, <em>Le Nozze di Figaro</em>! If you happen to be free on the last weekend of August, this is an outing. You will be hearing probably the most universally beloved operas in the repertoire sung by the best local talent. Obviously, I&rsquo;m highly biased but I&rsquo;m kind of working with a dream team for this one.</p>
-    <p><a class="button" href="https://www.genesisoperatheatre.com/current-production">Check it out!</a></p>
+    <p class="reveal"><strong>Come See Me Perform!</strong></p>
+    <p class="reveal">This August, I will be performing the role of Susanna in Mozart&rsquo;s magnum opus and my most favorite operas of all time, <em>Le Nozze di Figaro</em>! If you happen to be free on the last weekend of August, this is an outing. You will be hearing probably the most universally beloved operas in the repertoire sung by the best local talent. Obviously, I&rsquo;m highly biased but I&rsquo;m kind of working with a dream team for this one.</p>
+    <p class="reveal"><a class="button" href="https://www.genesisoperatheatre.com/current-production">Check it out!</a></p>
 
-    <p>If you have read this far into my newsletter, thank you so much for reading and I promise not to spam you!</p>
-    <p>Maya Goell</p>
+    <p class="reveal">If you have read this far into my newsletter, thank you so much for reading and I promise not to spam you!</p>
+    <p class="reveal">Maya Goell</p>
   </article>
 
   <!-- The original ends a post with the other post's title as a
        big link (its prev/next pagination). -->
-  <p class="post-pagination"><a href="blog-fall-2026.html">It&rsquo;s back to School! [Fall 2026]</a></p>
+  <p class="post-pagination reveal"><a href="blog-fall-2026.html">It&rsquo;s back to School! [Fall 2026]</a></p>
 
 </main>
 
