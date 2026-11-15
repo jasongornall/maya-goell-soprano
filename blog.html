@@ -9,7 +9,27 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?t=1794758873">
+<!-- Animations, step one of two: this script runs before
+     anything on the page paints and flags the page as
+     "JavaScript is on". That flag is what lets style.css start
+     the .reveal blocks hidden (see the Motion section there);
+     without JavaScript the flag never appears and every block
+     simply shows, so nothing can be left invisible. Step two
+     is animations.js, loaded below, which watches the blocks
+     and reveals each as it scrolls into view. The setTimeout
+     is a safety net: if animations.js ever fails to load, the
+     flag comes back off and the page shows plainly instead of
+     staying hidden. -->
+<script>
+document.documentElement.classList.add("js-reveal");
+setTimeout(function () {
+  if (!window.mayaRevealReady) {
+    document.documentElement.classList.remove("js-reveal");
+  }
+}, 2000);
+</script>
+<link rel="stylesheet" href="style.css?t=1794759662">
+<script src="animations.js?t=1794759662" defer></script>
 </head>
 <body>
 
@@ -37,7 +57,7 @@
        blog-summer-2026.html). A new post gets a new card here,
        copied from one of these, plus its own page file. -->
 
-  <article class="blog-card">
+  <article class="blog-card reveal">
     <a href="blog-fall-2026.html"><img src="assets/img/blog-figaro.jpg" alt="Maya Goell as Susanna in Le Nozze di Figaro"></a>
     <div>
       <p class="card-date">9/15/26</p>
@@ -46,7 +66,7 @@
     </div>
   </article>
 
-  <article class="blog-card">
+  <article class="blog-card reveal">
     <a href="blog-summer-2026.html"><img src="assets/img/blog-hawk-awards.jpg" alt="Virginia Hawk Vocal Awards"></a>
     <div>
       <p class="card-date">7/7/26</p>
