@@ -54,6 +54,10 @@ header {
   /* Faint shadow so the bar reads as a layer above the page
      once you scroll, like the original's fixed header. */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+  /* The background and shadow ease as the header settles into
+     its solid bar on scroll (see "Header colors, per page"
+     below and the Motion section at the bottom). */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .site-title {
@@ -64,7 +68,13 @@ header {
   font-size: 1.5rem;
   letter-spacing: -0.02em;
 }
-.site-title a { color: #818268; text-decoration: none; }
+.site-title a {
+  color: #818268;
+  text-decoration: none;
+  /* Eases to the settled peach color on scroll, like the nav
+     links below already do. */
+  transition: color 0.3s ease;
+}
 
 nav { display: flex; flex-wrap: wrap; gap: 6px 26px; }
 nav a {
@@ -601,39 +611,44 @@ button.button { background: none; font: inherit; cursor: pointer; }
    Contact photo (cream), and the nav is pale sage on the pages
    whose first section uses the "bold" theme (Bio, Engagements,
    Lessons), olive on the others, cream on Contact. Once you
-   scroll, every page's header turns solid the same way: cream
-   background (see header-settles in Motion) with the title and
-   nav in the peach color; that solid pairing is written into
-   all ten of the original's theme blocks. The keyframes below
-   walk each link from its at-top color to that solid peach
-   across the same 140px of scroll as the background settle.
-   Pages opt in with a class on their <header>: .hdr-bold for
-   the sage-nav pages, .hdr-dark for Contact; no class means
-   the default olive start. Browsers without scroll-driven
-   animations skip this and keep the plain olive links. */
-@keyframes header-text-settles {
-  from { color: #818268; }
-  to { color: #DCB8AC; }
+   scroll, every page's header settles into the same solid bar:
+   cream background with the title and nav in the peach color;
+   that solid pairing is written into all ten of the original's
+   theme blocks. Pages opt in with a class on their <header>:
+   .hdr-bold for the sage-nav pages, .hdr-dark for Contact; no
+   class means the default olive start.
+
+   HOW the settle works: animations.js watches the scroll
+   position and adds a .scrolled class to the header once the
+   page has scrolled a little; the background, shadow and text
+   colors then ease over via plain CSS transitions (the header
+   rule at the top of this file, and the link rules there). An
+   earlier version drove this with a scroll-driven CSS
+   animation (animation-timeline: scroll()), which whole
+   families of browsers do not support; in those browsers the
+   header simply never settled. Everything in this section is
+   scoped to .js-reveal, the flag the head script sets when
+   JavaScript is on: without JavaScript the header keeps the
+   plain solid style of its base rule, fully visible, instead
+   of (on Contact) cream text sitting on a cream bar. */
+.js-reveal header {
+  background-color: rgba(255, 249, 240, 0);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
 }
-@keyframes header-text-settles-bold {
-  from { color: #C2C293; }
-  to { color: #DCB8AC; }
+.js-reveal header.hdr-bold nav a { color: #C2C293; }
+.js-reveal header.hdr-dark .site-title a,
+.js-reveal header.hdr-dark nav a { color: #FFF9F0; }
+.js-reveal header.scrolled {
+  background-color: #FFF9F0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
 }
-@keyframes header-text-settles-dark {
-  from { color: #FFF9F0; }
-  to { color: #DCB8AC; }
-}
-@supports (animation-timeline: scroll()) {
-  header .site-title a, header nav a {
-    animation: header-text-settles linear both;
-    animation-timeline: scroll(root block);
-    animation-range: 0px 140px;
-  }
-  header.hdr-bold nav a { animation-name: header-text-settles-bold; }
-  header.hdr-dark .site-title a, header.hdr-dark nav a {
-    animation-name: header-text-settles-dark;
-  }
-}
+.js-reveal header.scrolled .site-title a,
+.js-reveal header.scrolled nav a { color: #DCB8AC; }
+/* Hover still darkens nav links in every header state above;
+   it needs the extra weight to win over the color rules. */
+.js-reveal header.hdr-bold nav a:hover,
+.js-reveal header.hdr-dark nav a:hover,
+.js-reveal header.scrolled nav a:hover { color: #6F6E57; }
 
 /* Contact's header floats over the hero photo on the original
    (its header is fixed and transparent there), instead of
@@ -644,137 +659,69 @@ button.button { background: none; font: inherit; cursor: pointer; }
 body.contact-page header { position: fixed; top: 0; left: 0; right: 0; }
 
 /* ============================================================
-   Motion — the original Squarespace site's gentle movement:
-   content fades in and rises a little as it scrolls into view,
-   heroes fade in on load, and the header settles into its solid
-   bar as you start scrolling. All of it is plain CSS.
+   Motion: the original Squarespace site's gentle movement.
+   Content fades in and rises a little as it scrolls into view,
+   and the header settles into its solid bar as you start
+   scrolling.
 
-   SAFETY, and why this section is built the way it is: the
-   hidden "before" states exist ONLY inside the animations
-   below. The scroll effects are wrapped in @supports, so a
-   browser without scroll-driven animations simply never
-   applies them and everything sits fully visible, exactly as
-   it did before this section existed. The load-in fades are
-   ordinary timed animations that always run to the visible
-   end state. No element can be left invisible by this code.
+   HOW IT WORKS, and why it is built this way: the movement
+   itself is pure CSS transitions, declared right here (opacity
+   and transform, 0.6s, ease, the original's own timing values).
+   The only JavaScript is a class flip: animations.js watches
+   the .reveal blocks and adds a .revealed class to each one as
+   it enters the screen. No JavaScript animates anything.
+
+   This replaced a pure-CSS version built on scroll-driven
+   animations (animation-timeline: view()). Whole families of
+   browsers do not support those (older Safari, Firefox without
+   a flag, in-app webviews), and in them the reveals silently
+   never happened: the content just sat there, unmoving, which
+   is how this section earned its rewrite. The original
+   animates with JavaScript, which works everywhere; with the
+   class flip in JavaScript and the motion in CSS transitions,
+   so does this.
+
+   SAFETY: the hidden "before" state below exists ONLY under
+   .js-reveal, a class a short script in each page's <head>
+   adds when JavaScript is running. No JavaScript (or a search
+   crawler) means no class, no hidden state, everything simply
+   visible. If animations.js itself fails to load, the head
+   script takes the class back off after a couple of seconds.
+   And the reduced-motion block at the bottom removes the
+   hidden state entirely for visitors who ask for no motion.
    ============================================================ */
 
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: translateY(0); }
+/* The reveal: a block starts a little lower and transparent,
+   and eases up into place when animations.js marks it
+   .revealed. The original's own settings give the timing: the
+   motion runs 0.6s on an "ease" curve, applied per element as
+   it scrolls into view. Its configured delay of 0.6s before
+   each element moves is trimmed to 0.15s here: at the full
+   0.6s every block felt like it was lagging behind the scroll,
+   and the shorter pause still reads as the same deliberate
+   settle. */
+.js-reveal .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition-delay: 0.15s;
 }
-@keyframes rise-in {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
+.js-reveal .reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
 }
-@keyframes fade-only {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-/* The header starts transparent and picks up its cream
-   background and shadow over the first stretch of scrolling. */
-@keyframes header-settles {
-  from { background-color: rgba(255, 249, 240, 0); box-shadow: 0 0 0 rgba(0, 0, 0, 0); }
-  to { background-color: #FFF9F0; box-shadow: 0 0 10px rgba(0, 0, 0, 0.08); }
-}
-
-/* Load-in: heroes and page titles fade in when the page opens.
-   (Page titles: the h1 is a direct child of <main> everywhere
-   except the Bio hero and the Contact hero, whose whole hero
-   blocks fade as one piece instead.) */
-.bio-hero, .contact-hero, .hero-img, main > h1 { animation: fade-in 0.9s ease-out; }
-
-/* Scroll reveals: each block fades and rises as it enters the
-   screen, the way Squarespace's fade animation behaves. The
-   animation-range says "play across the part where the block
-   is entering", so anything already on screen when the page
-   loads lands on its finished, visible state immediately.
-   Gallery photos get a fade with no rise: a transform on
-   photos inside the CSS-columns layout can make the columns
-   repaint oddly mid-animation in some browsers. Blog card
-   photos ride along with their card instead of animating
-   twice. Headings h2-h4 are here; h1 is load-in only (above). */
-@supports (animation-timeline: view()) {
-  main h2, main h3, main h4,
-  main p, main blockquote,
-  main img:not(.blog-card img, .gallery-cols img),
-  .blog-card, .video-grid iframe, .calendar-embed, .cal-box {
-    animation: rise-in linear both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 70%;
-  }
-  .gallery-cols img {
-    animation: fade-only linear both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 70%;
-  }
-}
-
-/* ---------- Bio page reveals, matched to the original ----------
-   The original's own settings (in its Squarespace tweak data)
-   run a site-wide animation with type "slide" and style "fade":
-   every element, headings, paragraphs and images one by one,
-   fades in while sliding up, 0.6s long, "ease" curve, with a
-   0.6s delay, triggered the moment the element scrolls into
-   view. The Press quotes get exactly that: each quote is its
-   own element, and each attribution line is another, animating
-   right after its quote.
-
-   The general reveal above cannot feel like that, for two
-   reasons. It is scroll-scrubbed, so a block only moves while
-   the visitor is actively scrolling, and it stretches the
-   motion across 70% of the block's entry, so a tall press
-   quote spends a long stretch of scrolling half-faded and
-   reads as no animation at all. These Bio rules fix both:
-   the motion completes across a short 38% of entry, so it
-   plays through promptly as the block arrives, and the
-   keyframes below are shaped like the original's "ease"
-   curve (most of the distance early, a gentle settle at the
-   end) instead of the dead-linear crawl. The quotes' source
-   lines start a little later into their entry than the
-   quotes themselves, which stands in for the original's
-   per-element delay: quote first, attribution following.
-
-   Honest limit: pure CSS scroll-driven animation is tied to
-   scroll position, so it cannot reproduce the original's
-   timed play-through (0.6s delay, then 0.6s of motion, even
-   if the visitor stops scrolling). This is the closest CSS
-   can get. Scoped to the Bio page via the "bio" class on its
-   <main>, so the other pages keep the reveal they already
-   have. Same safety as the rest of this section: everything
-   lives inside @supports, so a browser without scroll-driven
-   animations shows the content plainly, and the reduced
-   motion block below switches all of it off. */
-@keyframes bio-rise {
-  from { opacity: 0; transform: translateY(28px); }
-  60% { opacity: 0.9; transform: translateY(7px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@supports (animation-timeline: view()) {
-  main.bio h2, main.bio p, main.bio blockquote,
-  main.bio .side-by-side:not(.bio-hero) img {
-    animation: bio-rise linear both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 38%;
-  }
-  /* The attribution trails its quote, as on the original. */
-  main.bio .press-source {
-    animation: bio-rise linear both;
-    animation-timeline: view();
-    animation-range: entry 8% entry 46%;
-  }
-}
-
-/* The header settle, driven by page scroll position: solid by
-   about 140px of scrolling. Outside @supports the header just
-   keeps the solid style from its base rule, as before. */
-@supports (animation-timeline: scroll()) {
-  header {
-    animation: header-settles linear both;
-    animation-timeline: scroll(root block);
-    animation-range: 0px 140px;
-  }
-}
+/* On the original, a Press attribution is its own animated
+   element and follows right after its quote, so source lines
+   wait a beat longer than everything else. */
+.js-reveal .press-source.reveal { transition-delay: 0.35s; }
+/* Gallery photos fade with no rise: a transform on photos
+   inside the CSS-columns layout can make the columns repaint
+   oddly mid-transition in some browsers. (Blog card photos
+   ride along with their card instead of animating on their
+   own.) The end state of .revealed sets translateY(0), which
+   is the same resting place as no transform, so this one rule
+   is enough to keep gallery photos flat while they fade. */
+.js-reveal .reveal-fade { transform: none; }
 
 /* Hover life on images: a whisper of brightness, nothing more.
    The transition lives here so the change eases both ways. */
@@ -785,14 +732,15 @@ body.contact-page header { position: fixed; top: 0; left: 0; right: 0; }
 
 /* Reduced motion: some visitors ask their system for no
    animation, and that request wins over everything above.
-   Note this removes the animations outright rather than just
-   shortening them: scroll-driven animations ignore duration,
-   so a tiny duration would not actually stop them. Because
-   the hidden states live only inside the animations, taking
-   the animations away leaves every element fully visible. */
+   Transitions are switched off outright, and the reveal's
+   hidden start state is removed with them, so every block
+   simply sits visible. (animations.js also reveals everything
+   at once for these visitors; either path alone would be
+   enough, and together they cannot miss.) */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation: none !important;
     transition: none !important;
   }
+  .js-reveal .reveal { opacity: 1 !important; transform: none !important; }
 }
