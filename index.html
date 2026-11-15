@@ -28,20 +28,20 @@ setTimeout(function () {
   }
 }, 2000);
 </script>
-<link rel="stylesheet" href="style.css?t=1794762000">
-<script src="animations.js?t=1794762000" defer></script>
+<link rel="stylesheet" href="style.css?t=1794763558">
+<script src="animations.js?t=1794763558" defer></script>
 </head>
 <body>
 
 <!-- Header and nav are repeated in every page file on purpose:
      with plain static hosting there is no template engine, and
      copy-paste keeps the site build-free and easy to read. -->
-<!-- The hdr-bold class is a leftover from an earlier pass:
-     style.css no longer colors the nav sage at the top (the
-     rendered original shows dark olive there), so the class
-     now changes nothing; it stays only as a marker of which
-     pages used to carry it. See "Header colors, per page" in
-     style.css. -->
+<!-- The hdr-bold class marks the pages whose header on the
+     original carries its "white-bold" theme: on those pages
+     the nav links are the theme's pale sage while the title
+     stays olive. style.css keys the sage nav off this class;
+     see "Header colors, per page" there for the theme values
+     quoted from the original's own stylesheet. -->
 <header class="hdr-bold">
   <div class="site-title"><a href="index.html">Maya Goell Soprano</a></div>
   <!-- Mobile menu button: only shown with JavaScript on, at
