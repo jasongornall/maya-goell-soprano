@@ -287,14 +287,22 @@ img { max-width: 100%; height: auto; display: block; }
      already landed right, so the photo alone moves. */
   .bio-hero .side-photo { width: 398px; margin-top: -14px; }
 }
-/* On narrow screens the original wraps the name to two
+/* On PHONE screens the original wraps the name to two
    lines. The measure does it: at 3.5rem the full name is
    about 275px wide (again measured against the font), so a
    270px measure breaks it after "Maya", and each word (about
-   136 and 129px) sits comfortably on its own line. */
+   136 and 129px) sits comfortably on its own line. At tablet
+   widths the original's scaled name stays on ONE line, so
+   the measure applies only at phone widths: the 800px block
+   below sets the size without the cap, and the 640px block
+   after it adds the cap (a responsive re-audit caught the
+   cap forcing the two-line wrap at 768px too). */
 @media (max-width: 800px) {
-  .hero-name { font-size: 3.5rem; max-width: 270px; margin: 0 auto; }
+  .hero-name { font-size: 3.5rem; margin: 0 auto; }
   .bio-hero .side-photo { width: 100%; }
+}
+@media (max-width: 640px) {
+  .hero-name { max-width: 270px; }
 }
 
 /* ---------- Press quotes on the Bio page ---------- */
@@ -531,11 +539,23 @@ html.gallery-page, body.gallery-page { overflow-x: clip; }
 }
 
 /* A single post on its own page. The original sets a post in
-   a column about 900px wide at desktop (a round-4 comparison
-   measured its text running about 500 to 1400px across a
-   1919px window, where our earlier 60% measure ran about 30
-   to 50px narrower on each side), centered, with the text
-   itself centered too; the title and the date/author line
+   a centered column whose width its markup states outright:
+   60% of its section, under the same "narrow" content
+   setting on BOTH posts (checked in both pages' markup), so
+   the two posts do not get different columns. A round-4
+   comparison measured the text running about 500 to 1400px
+   across a 1919px window and 900px was set from that; a
+   round-6 comparison then caught the Summer intro wrapping
+   to 3 lines here against 2 on the original and starting
+   some 50px further right. The intro is the tell: at the
+   shared 16px body size, a check against the real Poppins
+   metrics wraps it to 2 lines only from about 950px up,
+   and a 980px column centered in the wrap starts about
+   470px across the window, where the original's intro
+   starts. So the column is 980px. The Fall post's verified
+   positions were centered or vertical, which a wider
+   centered column leaves where they were. The text itself
+   is centered too; the title and the date/author line
    use the peach body color there, not olive. On the RENDERED
    original the date/author line sits ABOVE the title (a
    round-5 comparison caught ours sitting below it, which
@@ -552,7 +572,7 @@ html.gallery-page, body.gallery-page { overflow-x: clip; }
    its own centered line above its paragraph (a <br> pair
    does that in the page), in the Summer post they stand
    alone as their own paragraphs. */
-.post { width: 900px; max-width: 100%; margin: 48px auto 64px; text-align: center; }
+.post { width: 980px; max-width: 100%; margin: 48px auto 64px; text-align: center; }
 @media (max-width: 800px) {
   .post { width: auto; }
 }
@@ -568,8 +588,25 @@ html.gallery-page, body.gallery-page { overflow-x: clip; }
    shared 24px rhythm leaves about 25px (round-5
    comparison). The class is on that one photo only; the
    Summer post's photo keeps the shared rhythm, which the
-   same comparison left alone. */
-.post img.img-gap { margin-top: 100px; }
+   same comparison left alone. The photo carries the air
+   BELOW it too: about 120px down to the "Win two free
+   tickets" head on the original, where the shared 24px
+   bottom margin left about 35px (round-6 comparison), so
+   its bottom margin is 109px, the 24px plus the missing
+   85px. */
+.post img.img-gap { margin-top: 100px; margin-bottom: 109px; }
+
+/* The Fall post's later section heads (the bold lead-in
+   paragraphs after the first) each carry extra air above
+   them: a round-6 comparison measured the run from one
+   section into the next at about 225px on the original
+   against about 155px here. The margin is 86px rather
+   than the missing 70 because it collapses with the 16px
+   paragraph margin under the text above it, and 86 less
+   16 is the 70 the span was short. The first section head
+   ("Win two free tickets") takes its air from the Figaro
+   photo's bottom margin above instead. */
+.post .post-sec { margin-top: 86px; }
 
 /* A paragraph inside a post that stays left-aligned while
    the rest of the post centers: the Summer post's two
@@ -586,8 +623,15 @@ html.gallery-page, body.gallery-page { overflow-x: clip; }
    it links to the blog index, our equivalent. The block
    keeps the peach color even inside the Summer post, whose
    paragraphs are olive: on the original the author block
-   sits outside the colored text and keeps the plain color. */
-.post-author { text-align: left; margin: 48px 0 8px; color: #DCB8AC; }
+   sits outside the colored text and keeps the plain color.
+   It also sits further down than the shared rhythm: about
+   180px of air separates the last text ("Follow me for
+   more" on the Fall post) from the avatar on the original,
+   where a 48px top margin rendered about 95px (round-6
+   comparison), so the top margin is 133px. Both posts
+   share this one author component on the original, so both
+   take the same margin here. */
+.post-author { text-align: left; margin: 133px 0 8px; color: #DCB8AC; }
 .post-author a {
   display: inline-flex;
   flex-direction: column;
@@ -669,6 +713,18 @@ html.post-page, body.post-page { overflow-x: clip; }
    1540px, so the cap is 1255px now. Rendered wins.) */
 @media (min-width: 801px) {
   .faq { max-width: 1255px; }
+}
+/* The whole FAQ also rides lower on the page than the
+   shared rhythm puts it: a round-6 comparison measured its
+   first question sitting about 40px higher on ours than on
+   the original. The margin lands on the wrapper; above it
+   the chain is the intro row's 40px bottom margin and the
+   heading's own 44px top margin collapsing together, so the
+   value that moves the block down the measured 40px is
+   84px, not 40px. Desktop widths only, where it was
+   measured. */
+@media (min-width: 801px) {
+  .faq { margin-top: 84px; }
 }
 
 /* ---------- Contact hero ---------- */
@@ -854,8 +910,13 @@ footer {
      set so the links land about 330px below the band's top
      edge, where the rendered original puts them (an earlier
      pass used 160px and the links sat about 170px down,
-     visibly too high in the band). */
-  padding: 320px 20px 180px;
+     visibly too high in the band). The bottom padding is
+     85px: it stood at 180px, and a round-6 comparison found
+     our band running about 85 to 110px taller than the
+     original's with all of the excess below the links (the
+     links' height in the band already matched), so the
+     bottom came in by the measured excess. */
+  padding: 320px 20px 85px;
   font-size: 1.4rem;
 }
 footer a { color: #FFF9F0; margin: 0 4px; transition: opacity 0.25s ease; }
@@ -865,19 +926,20 @@ footer a:hover { opacity: 0.8; }
 footer a:not(:last-child)::after { content: ","; }
 /* On small screens the original's section padding scales
    down with the window, so the band shrinks too: the desktop
-   320/180px would stack up to a roughly 500px olive wall on
+   320/85px would stack up to a roughly 400px olive wall on
    a phone, most of it empty. These steps keep the band's
-   proportions without touching the desktop values. The type
+   proportions (bottoms included, scaled down in step with
+   the desktop bottom) without touching the desktop values. The type
    steps down with the padding: at the desktop 1.4rem the
    social line is about 354px of type in a roughly 350px
    phone column and wraps to two lines, where the original's
    fluid text shrinks and stays on one (responsive
    re-audit). */
 @media (max-width: 800px) {
-  footer { padding: 140px 20px 90px; font-size: 1.25rem; }
+  footer { padding: 140px 20px 55px; font-size: 1.25rem; }
 }
 @media (max-width: 640px) {
-  footer { padding: 110px 20px 70px; font-size: 1.1rem; }
+  footer { padding: 110px 20px 45px; font-size: 1.1rem; }
 }
 
 /* The embedded event calendar on the Engagements page needs
@@ -979,6 +1041,13 @@ footer a:not(:last-child)::after { content: ","; }
 }
 @media (max-width: 800px) {
   .cal-day { height: 48px; }
+}
+/* Tablet widths take a step between the desktop 95px and
+   the phone 48px: at 48px the roughly 96px-wide tablet
+   cells render as squat 2:1 boxes (responsive re-audit),
+   so the 641-800px band gets 72px. */
+@media (min-width: 641px) and (max-width: 800px) {
+  .cal-day { height: 72px; }
 }
 /* Blank cells (the days of the neighbouring months) get the
    same pale box, just with no number in it. */
@@ -1178,6 +1247,15 @@ button.button { background: none; font: inherit; cursor: pointer; }
    mid widths; at desktop width the grid-placed block below
    takes over. */
 .expect-heading { font-size: 2.2rem; color: #C2C293; text-align: center; }
+/* The original leaves a deep well of cream between the FAQ
+   and this heading: a round-6 comparison measured about
+   270px of it there against about 55px on ours, of which
+   the shared h2 top margin (44px) is most. The heading's
+   own top margin carries the difference at desktop widths:
+   the 44px shared margin plus the missing 215px. */
+@media (min-width: 801px) {
+  .expect-heading { margin-top: 259px; }
+}
 /* The expect paragraphs are the original's LARGE text style
    (its markup classes them so): 1.4rem at the shared 1.5
    line height, about 34px a line. Ours inherited the normal
@@ -1220,12 +1298,10 @@ button.button { background: none; font: inherit; cursor: pointer; }
    starting about 467, photo about 479 wide ending at 1500.
    Row 2: photo about 480 wide starting about 406 (the same
    8-of-24-columns span as row 1's photo; see the note inside
-   the block), text about 330 wide starting about 1170 (see
-   its own note for why it is narrower than the grid span).
-   The
-   margins below are those positions measured from the
-   page's 285px inset, and the row itself is capped at the
-   section's 1215px span. */
+   the block), text about 360 wide starting about 1080 (see
+   its own note). The margins below are those positions
+   measured from the page's 285px inset, and the row itself
+   is capped at the section's 1215px span. */
 @media (min-width: 1000px) {
   .expect-row { max-width: 1215px; }
   .expect-row .side-main { flex: 0 1 418px; margin-left: 182px; }
@@ -1240,18 +1316,19 @@ button.button { background: none; font: inherit; cursor: pointer; }
      arithmetic that once argued for 268px here. Ours had
      row 2 at 418px wide from an earlier grid reading. */
   .expect-row-2 .side-photo { width: 480px; margin-left: 121px; }
-  /* Row 2's text is narrower than the 357px a grid reading
-     gave: at 357px ours wrapped the paragraph to 6 lines
-     where the original wraps it to 7 (round-5 comparison).
-     A wrap simulation run against the real Poppins metrics
-     (it reproduces row 1's five lines exactly at its 418px)
-     puts the seven-line band's near edge at about 345px,
-     so the column narrows to 330px to buy the extra line
-     with a little margin, and its left margin grows by the
-     same amount so the text's right edge stays at the
-     section's 1500px end: 121 + 480 + the 48px flex gap +
-     236 + 330 = the row's 1215px. */
-  .expect-row-2 .side-main { flex: 0 1 330px; margin-left: 236px; }
+  /* Row 2's text geometry is settled by the rendered
+     original, not by arithmetic: it starts about 1080px
+     across the window and ends about 1440, a column about
+     360px wide wrapping to 7 lines (round-6 comparison).
+     A round-5 pass had narrowed the column to 330px and
+     pushed it right (margin-left 236px) on the strength of
+     a wrap simulation; the rendered page then showed ours
+     starting about 1160 and wrapping to 8 lines, so the
+     simulation loses and the measured positions stand:
+     121 + 480 + the 48px flex gap + 146 + 360 = 1155 of
+     the row's 1215px, with the text starting at the
+     section's 285 + 121 + 480 + 48 + 146 = 1080. */
+  .expect-row-2 .side-main { flex: 0 1 360px; margin-left: 146px; }
 }
 
 /* Engagements title: on the original it is not a heading at
@@ -1497,7 +1574,7 @@ main.page-bio { padding-bottom: 16.5vmax; }
    own kind: the small headings with the h4 steps, the
    quotes with the large-text steps (the expect text's). */
 @media (max-width: 640px) {
-  .post h1 { font-size: 2.5rem; }
+  .post h1 { font-size: 2.5rem; margin-bottom: 44px; }
   .blog-card .card-title { font-size: 2rem; }
   .expect-row .side-main { font-size: 1.12rem; }
   .video-title { font-size: 2.5rem; }
@@ -1506,6 +1583,15 @@ main.page-bio { padding-bottom: 16.5vmax; }
   .post-pagination a { font-size: 2rem; }
   .about-heading, .faq-heading, .cal-title { font-size: 1.4rem; }
   blockquote, .press-source { font-size: 1.12rem; }
+  /* The post pages' big desktop gaps step down on phones
+     too, on the same logic as the type: the pagination
+     row's 55px side insets would leave a sliver of a text
+     column in a 390px window, and the Figaro photo's 100px
+     of air above it (the img-gap rule) is a desktop
+     measurement that would swamp a phone screen. The title
+     air steps with its size, in the .post h1 rule above. */
+  .post-pagination { padding: 0 20px; }
+  .post img.img-gap { margin-top: 48px; }
 }
 @media (min-width: 641px) and (max-width: 800px) {
   h1 { font-size: 2.73rem; }
