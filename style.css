@@ -3,101 +3,178 @@
    Plain CSS only: no frameworks, no build step. Edit a rule
    here and it changes on all pages at once, which is WHY all
    styling lives in this single file instead of per-page.
+
+   The look is matched to the original Squarespace site:
+   same two fonts (Manrope for headings, Poppins for text),
+   same warm cream background, same muted olive for headings
+   and links, same soft peach for body text, and an olive
+   footer band. The exact colors were read from the original
+   site's own palette settings, so this file uses those same
+   values instead of close guesses.
    ============================================================ */
 
 /* Simple reset so spacing behaves the same in every browser. */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  font-family: Georgia, "Times New Roman", serif;
-  color: #2b2b2b;
-  background: #fdfcf9;
-  line-height: 1.7;
+  /* Poppins is the original site's text font, regular weight,
+     with its 1.5 line height. */
+  font-family: "Poppins", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  /* The original's palette names this soft peach as its "black",
+     so body text really is peach on cream over there. We use the
+     same pairing so the remake feels like the same site. */
+  color: #DCB8AC;
+  /* Warm cream, the original site's background color. */
+  background: #FFF9F0;
 }
 
-/* Keep text in a comfortable reading column, centered. */
-.wrap { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+/* Page column: the original is a wide, airy layout (its content
+   area runs up to 1500px with wide side gutters). 1100px keeps
+   that open feel while holding text lines to a readable length. */
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 4vw; }
 
 /* ---------- Header / navigation ---------- */
-header { text-align: center; padding: 36px 20px 10px; }
+/* The original header is a full-width bar: site title on the
+   left, navigation on the right, cream background. It stays
+   pinned to the top of the screen when scrolling, which is
+   what position: sticky gives us here in plain CSS. */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  padding: 24px 4vw;
+  background: #FFF9F0;
+  /* Faint shadow so the bar reads as a layer above the page
+     once you scroll, like the original's fixed header. */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+}
 
 .site-title {
-  font-size: 2rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  font-weight: normal;
+  /* Site title uses the heading font on the original too,
+     at 1.5rem in the accent olive. */
+  font-family: "Manrope", Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
 }
-.site-title a { color: inherit; text-decoration: none; }
+.site-title a { color: #818268; text-decoration: none; }
 
-nav { margin-top: 14px; }
+nav { display: flex; flex-wrap: wrap; gap: 6px 26px; }
 nav a {
-  color: #555;
+  color: #818268;
   text-decoration: none;
-  margin: 0 12px;
-  font-size: 0.95rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 1rem;
 }
-nav a:hover { color: #000; text-decoration: underline; }
+/* The original underlines the nav item for the page you are on,
+   so the .active link in each page's nav gets the underline. */
+nav a:hover, nav a.active { text-decoration: underline; text-underline-offset: 4px; }
 
 /* ---------- General content ---------- */
-main { padding: 30px 0 50px; }
+main { padding: 56px 0 72px; }
 
-h1 { font-size: 2.2rem; font-weight: normal; text-align: center; margin-bottom: 20px; }
-h2 { font-size: 1.5rem; font-weight: normal; margin: 36px 0 12px; }
-h3 { font-size: 1.15rem; font-weight: normal; margin: 22px 0 6px; }
+/* Headings: Manrope medium, tight letter spacing, olive.
+   Sizes are the original's own scale (H1 4rem down to H4 1.6rem). */
+h1, h2, h3, h4 {
+  font-family: "Manrope", Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: #818268;
+}
+h1 { font-size: 4rem; margin-bottom: 24px; }
+h2 { font-size: 2.8rem; margin: 44px 0 14px; }
+h3 { font-size: 2.2rem; margin: 34px 0 10px; }
+h4 { font-size: 1.6rem; margin: 26px 0 8px; }
+
+/* On phones the original scales its headings down too;
+   these smaller sizes keep the same proportions. */
+@media (max-width: 640px) {
+  h1 { font-size: 2.5rem; }
+  h2 { font-size: 2rem; }
+  h3 { font-size: 1.7rem; }
+  h4 { font-size: 1.4rem; }
+}
 
 p { margin-bottom: 16px; }
-a { color: #7a4a21; }
+
+/* Links inside text are the same olive as the headings,
+   underlined so they read as links inside peach body text. */
+a { color: #818268; }
 
 img { max-width: 100%; height: auto; display: block; }
 
 /* Big photo at the top of a page (headshot, lesson hero...). */
-.hero-img { margin: 0 auto 28px; }
+.hero-img { margin: 0 auto 32px; }
 
-/* Centered lead line under a heading, like "Come see me do things!" */
-.lede { text-align: center; font-style: italic; color: #555; margin-bottom: 28px; }
+/* Centered lead line under a heading, like "Come see me do things!"
+   Set in the larger text size and olive, like a subtitle. */
+.lede {
+  text-align: center;
+  font-size: 1.4rem;
+  color: #818268;
+  margin-bottom: 32px;
+}
 
 /* ---------- Press quotes on the Bio page ---------- */
+/* Quote blocks on the original use the heading font and the
+   olive color, so press quotes are Manrope, not italic serif. */
 blockquote {
-  font-style: italic;
-  font-size: 1.15rem;
-  margin: 28px 0 6px;
+  font-family: "Manrope", Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: #818268;
+  margin: 32px 0 6px;
 }
-.press-source { color: #555; margin-bottom: 24px; }
+.press-source { color: #818268; margin-bottom: 28px; }
 
 /* ---------- Gallery grid ---------- */
 /* auto-fit makes the grid reflow on phones with no extra code. */
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 14px;
+  gap: 20px;
 }
 .gallery-grid img { width: 100%; height: 100%; object-fit: cover; }
 
 /* ---------- Blog ---------- */
-.post { margin-bottom: 60px; }
-.post-date { color: #777; text-align: center; margin-bottom: 18px; }
-.post img { margin: 20px auto; }
+.post { margin-bottom: 64px; }
+.post-date { color: #818268; text-align: center; margin-bottom: 20px; }
+.post img { margin: 24px auto; }
 
-/* A simple button-style link, used for the blog's call-to-action links. */
+/* Buttons on the original are outline style with square corners:
+   a thin olive border and olive text on transparent background,
+   filling with olive on hover. */
 .button {
   display: inline-block;
-  border: 1px solid #7a4a21;
-  padding: 8px 18px;
+  border: 1px solid #818268;
+  padding: 12px 26px;
+  color: #818268;
   text-decoration: none;
   margin: 6px 0 14px;
 }
-.button:hover { background: #7a4a21; color: #fff; }
+.button:hover { background: #818268; color: #FFF9F0; }
 
 /* ---------- Footer ---------- */
+/* The original closes pages with an olive band and cream text
+   (its "bright" section style), so the footer borrows that:
+   olive background, cream links. */
 footer {
+  background: #818268;
+  color: #FFF9F0;
   text-align: center;
-  padding: 30px 20px 40px;
-  color: #777;
+  padding: 36px 20px 44px;
   font-size: 0.95rem;
 }
-footer a { color: #555; margin: 0 10px; }
+footer a { color: #FFF9F0; margin: 0 10px; }
 
 /* The embedded event calendar on the Engagements page needs
    a fixed height or it collapses to nothing. */
