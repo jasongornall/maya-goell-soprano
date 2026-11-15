@@ -30,10 +30,19 @@ body {
   background: #FFF9F0;
 }
 
-/* Page column: the original is a wide, airy layout whose content
-   area runs to about 1450px, so the column matches that width.
-   The 4vw side padding keeps a gutter on smaller screens. */
-.wrap { max-width: 1450px; margin: 0 auto; padding: 0 4vw; }
+/* Page column: the original is a wide, airy layout. Measured
+   on the rendered original at desktop width, its content
+   starts about 222px from the left edge and the inner column
+   runs about 1470px wide, so the column here is 1550px with a
+   slim 2vw gutter inside it: at 1919px wide that lands the
+   content's left edge at 222px, matching the measurement.
+   (An earlier pass used 1450px with a 4vw gutter, which put
+   the content about 80px too far right.) On small screens the
+   gutter goes back up so text never hugs the edge. */
+.wrap { max-width: 1550px; margin: 0 auto; padding: 0 2vw; }
+@media (max-width: 800px) {
+  .wrap { padding: 0 5vw; }
+}
 
 /* ---------- Header / navigation ---------- */
 /* The original header is a full-width bar: site title on the
@@ -156,14 +165,16 @@ img { max-width: 100%; height: auto; display: block; }
   .side-by-side .side-photo { width: 100%; }
 }
 
-/* Bio page hero: the name is set very large in two lines in the
-   left column, with the portrait at the right at about 390px
-   wide, exactly the original's arrangement. */
+/* Bio page hero: the name is set very large in the left
+   column, with the portrait at the right at about 390px wide,
+   exactly the original's arrangement. */
 .bio-hero { align-items: center; }
-/* The original centers the name inside its column and renders it
-   at about 100px tall on a desktop screen. Squarespace scales
-   its heading type with the screen (a fluid algorithm we cannot
-   copy exactly in fixed CSS), so 6.25rem is the desktop match. */
+/* The original centers the name inside its column and renders
+   it on ONE line at desktop width, at about 100px tall.
+   Squarespace scales its heading type with the screen (a fluid
+   algorithm we cannot copy exactly in fixed CSS), so 6.25rem
+   is the desktop match; on narrow screens the name wraps to
+   two lines on its own, the way the original's does. */
 .hero-name { font-size: 6.25rem; line-height: 1.2; margin: 0; text-align: center; }
 .bio-hero .side-photo { width: 390px; }
 @media (max-width: 800px) {
@@ -192,6 +203,16 @@ blockquote {
   margin: 40px 0 6px;
 }
 .press-source { font-size: 1.4rem; color: #DCB8AC; text-align: left; margin-bottom: 32px; }
+/* On the rendered original each attribution is INDENTED well
+   past its quote (the quote starts at the column's left edge,
+   the attribution about 128px further right; in the original's
+   markup the indent is literal spaces inside the text, which
+   its pre-wrap setting renders). A left margin is the cleaner
+   equivalent here. Desktop only: on a phone the indent would
+   eat the line. */
+@media (min-width: 801px) {
+  .press-source { margin-left: 128px; }
+}
 
 /* ---------- Gallery ---------- */
 /* Centered page headings, like the original's "Photo Gallery"
@@ -203,19 +224,39 @@ blockquote {
    give that masonry feel in a few lines: photos flow down one
    column and up the next, never cropped. break-inside keeps a
    photo from splitting across columns. */
-.gallery-cols { columns: 2; column-gap: 20px; }
+.gallery-cols {
+  columns: 2;
+  column-gap: 20px;
+  /* The original breathes between its heading and the photos:
+     measured on the rendered page, the first photo row starts
+     about 280px below the heading. 14.5vmax is that gap at
+     desktop width, and it shrinks with the screen the way the
+     original's own vmax section spacing does. */
+  margin-top: 14.5vmax;
+}
 .gallery-cols img { width: 100%; margin-bottom: 20px; break-inside: avoid; }
 @media (max-width: 700px) {
   .gallery-cols { columns: 1; }
 }
 
-/* The two performance videos sit side by side under the photos.
-   Each iframe keeps a 16:9 shape via aspect-ratio, so no fixed
-   pixel height is needed at any screen width. */
+/* The two performance videos sit side by side under the
+   photos, and on the original they run EDGE TO EDGE, the full
+   width of the window (about 940px each at desktop), not
+   inside the content column. The width/margin pair below is
+   the standard breakout: stretch the row to the window's full
+   width, then pull it back by half the difference so it stays
+   centered on the column it broke out of. Each iframe keeps a
+   16:9 shape via aspect-ratio, so no fixed pixel height is
+   needed at any screen width. The bottom margin leaves the
+   original's roughly 140px of cream between the videos and
+   the footer (7vmax at desktop width). */
 .video-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-bottom: 7vmax;
 }
 @media (max-width: 700px) {
   .video-grid { grid-template-columns: 1fr; }
@@ -233,10 +274,29 @@ blockquote {
   align-items: center;
   margin-bottom: 56px;
 }
+/* On the rendered original the card's text starts about 110px
+   to the right of the photo (the two are separate blocks in
+   its grid, with a wide gutter between), so the gap opens up
+   on desktop. */
+@media (min-width: 801px) {
+  .blog-card { gap: 110px; }
+}
+/* The photo is wrapped in a link, and the LINK is the flex
+   item, not the photo: without flex: none on it, the link
+   shrinks to make room for a long title and takes the photo
+   down with it (the second card's photo rendered narrower
+   than the first for exactly this reason). Pinning the link
+   keeps both card photos the same width. */
+.blog-card > a { flex: none; }
+/* Both cards' text blocks are left-aligned on the original;
+   saying so outright keeps a stray inherited alignment from
+   ever centering one of them. */
+.blog-card > div { text-align: left; }
 /* The original crops each card photo to a square (its blog
    setting is a 1:1 image shape), whatever the photo's own shape,
-   so aspect-ratio plus object-fit cover does the same crop here. */
-.blog-card img { flex: none; width: 550px; aspect-ratio: 1 / 1; object-fit: cover; }
+   so aspect-ratio plus object-fit cover does the same crop here.
+   555px is the width the rendered original shows. */
+.blog-card img { flex: none; width: 555px; aspect-ratio: 1 / 1; object-fit: cover; }
 /* The date line on the original is the peach body color, not
    olive: its blog settings color the date line as plain text. */
 .blog-card .card-date { color: #DCB8AC; margin-bottom: 8px; }
@@ -298,7 +358,19 @@ blockquote {
    top padding (the .flush-top class) so the photo touches the
    header bar. */
 .flush-top { padding-top: 0; }
-.contact-hero { position: relative; margin-bottom: 56px; }
+.contact-hero {
+  position: relative;
+  margin-bottom: 56px;
+  /* The photo's own average tone, as a fallback background.
+     WHY: the heading over this photo is white and the header
+     above it is cream text; if the photo is ever slow, blocked
+     or still fading in, a bare section would show the page's
+     cream through and both texts would vanish into it (a
+     visual comparison caught exactly that). With the dark
+     tone behind it, the section always reads as a dark band
+     and the white text stays legible, photo or no photo. */
+  background: #2A140B;
+}
 .contact-hero img { width: 100%; height: 480px; object-fit: cover; }
 .contact-hero-text {
   position: absolute;
@@ -317,13 +389,19 @@ blockquote {
 
 /* Buttons on the original are outline style: a thin (1px) olive
    border and olive text on transparent background, filling with
-   olive on hover. Its own button settings give the exact shape:
-   padding 1rem by 1.3rem and corners rounded 6.4px. */
+   olive on hover. Its button settings give the padding (1rem by
+   1.3rem). The corners: the settings file claims a 6.4px radius,
+   but the RENDERED buttons on the original (the Lessons trial
+   button, the Contact submit) read near-sharp, and an earlier
+   pass with 6.4px looked visibly rounder than the original
+   side by side. Rendered wins over the settings value, so the
+   radius here is a near-sharp 2px, applied to every button on
+   the site so they all agree. */
 .button {
   display: inline-block;
   border: 1px solid #818268;
   padding: 1rem 1.3rem;
-  border-radius: 6.4px;
+  border-radius: 2px;
   color: #818268;
   text-decoration: none;
   margin: 6px 0 14px;
@@ -340,11 +418,25 @@ blockquote {
    input, no boxes. The form posts to the Cloudflare Worker in
    this repo's worker/ folder; see worker/README.md. */
 .contact-form .form-field { margin-bottom: 22px; }
+/* Labels on the original's form are the pale dusty rose body
+   color, not the olive (an earlier pass had them olive, which
+   read much darker than the original side by side). Required
+   fields say so in the label text itself, "(required)" after
+   the field name, which is Squarespace's own format; the text
+   lives in contact.html, this rule is only the look. */
 .contact-form label {
   display: block;
   font-size: 0.9rem;
-  color: #818268;
+  color: #DCB8AC;
   margin-bottom: 4px;
+}
+/* The "Name" group label that sits above the First/Last pair
+   on the original: same label look, a touch more air under it
+   because it labels the whole row, not one field. */
+.form-group-label {
+  font-size: 0.9rem;
+  color: #DCB8AC;
+  margin-bottom: 8px;
 }
 .contact-form input[type="text"],
 .contact-form input[type="email"],
@@ -433,49 +525,70 @@ footer a:not(:last-child)::after { content: ","; }
   .cal-box, .cal-widget { width: 100%; }
 }
 
-/* Month name with a prev/next arrow on each side. */
+/* Month name with a prev/next arrow at each edge. On the
+   original the arrows are small BARE chevrons (‹ ›), no box
+   around them, so these buttons are unstyled except for the
+   glyph itself. */
 .cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
 .cal-title { font-size: 1.6rem; margin: 0; }
 .cal-arrow {
   background: none;
-  border: 1px solid #818268;
+  border: 0;
   color: #818268;
-  width: 38px;
-  height: 38px;
-  font-size: 1.1rem;
+  font-size: 1.6rem;
+  line-height: 1;
+  padding: 4px 8px;
   cursor: pointer;
-  transition: background-color 0.25s ease, color 0.25s ease;
+  transition: color 0.25s ease;
 }
-.cal-arrow:hover { background: #818268; color: #FFF9F0; }
+.cal-arrow:hover { color: #6F6E57; }
 
 /* The grid itself: seven columns, weekday header row first,
-   then one cell per day. The script builds the cells. */
-.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+   then one cell per day. The script builds the cells.
+   On the original this is a BOXED grid: every day sits in its
+   own pale cell (about 125 by 70px at desktop width), the day
+   numbers are small and pale pink in the cell's top-left
+   corner, and the weekday headers are small and pale too.
+   An earlier pass drew an open grid with big centered pink
+   numbers and a solid olive pill for today; the rules below
+   are the quiet boxed look the original actually renders. */
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
 .cal-dow {
   text-align: center;
-  font-size: 0.8rem;
-  font-weight: 700;
+  font-size: 0.75rem;
+  font-weight: 400;
   letter-spacing: 0.08em;
-  color: #818268;
+  color: #C2C293;
   padding: 6px 0;
 }
 .cal-day {
   position: relative;
-  text-align: center;
-  padding: 9px 0;
-  border-radius: 6px;
+  text-align: left;
+  height: 70px;
+  padding: 6px 8px;
+  border-radius: 0;
   font: inherit;
-  color: inherit;
-  background: none;
+  font-size: 0.85rem;
+  color: #DCB8AC;
+  background: #F6F0E3;
   border: 0;
 }
-.cal-blank { background: none; }
-/* Days with events are real <button>s: bold olive text on a
-   soft rose wash, so they read as "something is here, click". */
+@media (max-width: 800px) {
+  .cal-day { height: 48px; }
+}
+/* Blank cells (the days of the neighbouring months) get the
+   same pale box, just with no number in it. */
+.cal-blank { background: #F6F0E3; }
+/* Days with events are real <button>s. The affordance stays
+   quiet, in the original's palette: a bolder olive number on
+   a soft rose wash, so the day reads as "something is here"
+   without shouting. */
 button.cal-day { font-weight: 700; color: #818268; background: rgba(220, 184, 172, 0.35); cursor: pointer; transition: background-color 0.25s ease; }
 button.cal-day:hover { background: rgba(220, 184, 172, 0.6); }
-/* Today gets the solid olive treatment so it jumps out. */
-.cal-day.today { background: #818268; color: #FFF9F0; font-weight: 700; }
+/* Today is only a slightly darker cell on the original, not a
+   filled pill: a deeper tint of the cell color, number still
+   pale pink, just bold. */
+.cal-day.today { background: #EDDDD2; font-weight: 700; }
 
 /* The month's events listed under the grid; each entry is a
    button that opens the same popup as clicking the day. */
@@ -493,7 +606,11 @@ button.cal-day:hover { background: rgba(220, 184, 172, 0.6); }
   transition: color 0.25s ease;
 }
 .cal-event-btn:hover { color: #6F6E57; }
-.cal-none { margin-top: 24px; font-style: italic; }
+/* There is deliberately no "no events this month" line under
+   the grid: the original's calendar shows nothing at all for
+   an empty month (its only empty-state text lives inside the
+   PosterMyWall widget next door), so when a month has no
+   events the script leaves the space under the grid empty. */
 
 /* ---------- Event popup ---------- */
 /* Clicking an event opens this small card over a dimmed
@@ -556,12 +673,23 @@ button.button { background: none; font: inherit; cursor: pointer; }
    size, 1.6rem, not the 2.8rem the shared h2 rule gives. */
 .about-text { color: #818268; }
 .about-heading { font-size: 1.6rem; }
-/* The stage photo starts a few grid rows lower than the text
-   on the original, so it sits noticeably below the heading.
-   96px stands in for those rows on desktop; on phones the row
-   stacks and the offset would just be a gap, so it is off. */
+/* The About row's proportions, measured on the rendered
+   original: the row does not span the whole column. The text
+   column is about 708px wide and the stage photo about 622px
+   (its left edge lands about 978px across a 1919px window),
+   so the row is capped at 708 + 48 gap + 622 = 1378px and the
+   photo is pinned to 622px; the text takes what is left. */
 @media (min-width: 801px) {
-  .about-photo { margin-top: 96px; }
+  .about-row { max-width: 1378px; }
+  .about-row .side-photo { width: 622px; }
+}
+/* The stage photo starts lower than the text on the original,
+   about 146px below the row's top (an earlier pass used 96px
+   and the photo rendered about 50px too high). On phones the
+   row stacks and the offset would just be a gap, so it is
+   desktop only. */
+@media (min-width: 801px) {
+  .about-photo { margin-top: 146px; }
 }
 
 /* Bio page, "Press": on the original this is a mid-size heading
@@ -582,13 +710,40 @@ button.button { background: none; font: inherit; cursor: pointer; }
    itself); the button inside keeps its own button colors. */
 .lessons-intro { color: #818268; }
 
+/* The "Music Lessons" heading renders darker and bolder on
+   the original than the shared heading style (a deeper olive,
+   bold weight), so this page's h1 gets its own rule. */
+.lessons-title { font-weight: 700; color: #6F6E57; }
+
+/* The Lessons intro row's proportions, measured on the
+   rendered original: the piano photo is about 495 by 330px
+   and starts a little inside the column (about 275px across
+   a 1919px window, where the column itself starts at 222),
+   and the text beside it is a NARROW column, about 480px, so
+   the words wrap sooner than the shared side-by-side layout
+   would let them. The trial-lesson button under the text
+   takes its own narrower width (about 300px) and its label
+   wraps to two lines, as it does on the original. */
+@media (min-width: 801px) {
+  .lessons-intro-row { margin-left: 53px; }
+  .lessons-intro-row .side-photo { width: 495px; }
+  .lessons-intro-row .side-main { flex: 0 1 480px; }
+  .lessons-cta { max-width: 300px; }
+}
+
 /* Lessons, "What to expect": the heading is a mid-size heading
    (2.2rem), centered, pale sage like the Gallery headings.
    Below it the original zigzags: text left with a photo right,
-   then a photo left with text right, the photos a bit narrower
-   than the usual side-by-side photo. */
+   then a photo left with text right. The text columns there
+   are narrower than the shared layout's (the second one
+   measures about 355px wide beside its photo), so both text
+   blocks are capped and the photos take a fixed 400px. */
 .expect-heading { font-size: 2.2rem; color: #C2C293; text-align: center; }
-.side-by-side.expect-row .side-photo { width: 36%; }
+@media (min-width: 801px) {
+  .expect-row .side-photo { width: 400px; }
+  .expect-row .side-main { flex: 0 1 460px; }
+  .expect-row-2 .side-main { flex: 0 1 355px; }
+}
 
 /* Engagements title: on the original it is not a heading at
    all but a bold paragraph in a "scaled text" box, which is
@@ -605,18 +760,21 @@ button.button { background: none; font: inherit; cursor: pointer; }
   text-align: center;
 }
 
-/* Header colors, per page. On the original the transparent
-   header takes its colors from the theme of the page's first
-   section: the title is olive everywhere except over the
-   Contact photo (cream), and the nav is pale sage on the pages
-   whose first section uses the "bold" theme (Bio, Engagements,
-   Lessons), olive on the others, cream on Contact. Once you
-   scroll, every page's header settles into the same solid bar:
-   cream background with the title and nav in the peach color;
-   that solid pairing is written into all ten of the original's
-   theme blocks. Pages opt in with a class on their <header>:
-   .hdr-bold for the sage-nav pages, .hdr-dark for Contact; no
-   class means the default olive start.
+/* Header colors, per page. At the top of the page, the
+   original's site title and nav read DARK OLIVE on every page
+   except Contact, where they are cream over the hero photo.
+   (An earlier pass, reading the original's theme settings,
+   started the Bio/Engagements/Lessons nav in pale sage; the
+   rendered site at desktop width shows dark olive there, and
+   a side-by-side visual comparison flagged the sage as too
+   pale. Rendered wins: at the top, the default olive of the
+   base header rules is what every non-Contact page uses, and
+   the .hdr-bold class some headers still carry no longer
+   changes any color.) Once you scroll, every page's header
+   settles into the same solid bar: cream background with the
+   title and nav in the peach color; that solid pairing is
+   written into all ten of the original's theme blocks. Contact
+   opts into its cream start with .hdr-dark on its <header>.
 
    HOW the settle works: animations.js watches the scroll
    position and adds a .scrolled class to the header once the
@@ -635,7 +793,6 @@ button.button { background: none; font: inherit; cursor: pointer; }
   background-color: rgba(255, 249, 240, 0);
   box-shadow: 0 0 0 rgba(0, 0, 0, 0);
 }
-.js-reveal header.hdr-bold nav a { color: #C2C293; }
 .js-reveal header.hdr-dark .site-title a,
 .js-reveal header.hdr-dark nav a { color: #FFF9F0; }
 .js-reveal header.scrolled {
@@ -646,7 +803,6 @@ button.button { background: none; font: inherit; cursor: pointer; }
 .js-reveal header.scrolled nav a { color: #DCB8AC; }
 /* Hover still darkens nav links in every header state above;
    it needs the extra weight to win over the color rules. */
-.js-reveal header.hdr-bold nav a:hover,
 .js-reveal header.hdr-dark nav a:hover,
 .js-reveal header.scrolled nav a:hover { color: #6F6E57; }
 
@@ -657,6 +813,38 @@ button.button { background: none; font: inherit; cursor: pointer; }
    it, edge to edge from the very top. Only this page: the
    class is on its <body>. */
 body.contact-page header { position: fixed; top: 0; left: 0; right: 0; }
+
+/* The Contact page's lower row, measured on the rendered
+   original: the performance photo is wider than the shared
+   side-by-side photo (about 663px) and the whole row starts a
+   little inside the column, which puts the form's left edge
+   about 1020px across a 1919px window. The photo is pinned
+   and the row indented to land the form in the same place. */
+@media (min-width: 1000px) {
+  .contact-row { margin-left: 87px; }
+  .contact-row .side-photo { width: 663px; }
+}
+
+/* ---------- Page spacing rhythm ----------
+   The original BREATHES: its sections carry large top and
+   bottom padding (Squarespace sets section padding in vmax,
+   so the air grows with the screen), and a visual comparison
+   at desktop width measured headings sitting far lower than
+   this remake's first pass put them. Each page's <main>
+   carries a page class below, and the values are the measured
+   ones converted to vmax (at 1919px wide, 1vmax is about
+   19px): the Gallery heading sits about 350px down the page,
+   Engagements about 270px, Lessons about 250px, and the Bio
+   page ends with about 350px of cream after the last press
+   attribution. The Engagements calendar also gets the
+   original's roughly 360px of cream above it and 365px below
+   it. Fixed CSS cannot follow the original's fluid grid
+   exactly, but vmax gets the rhythm right at any size. */
+main.page-gallery { padding-top: 13.5vmax; }
+main.page-engagements { padding-top: 9.5vmax; }
+main.page-lessons { padding-top: 8.5vmax; }
+main.page-bio { padding-bottom: 16.5vmax; }
+.calendar-row { margin-top: 20vmax; margin-bottom: 19vmax; }
 
 /* ============================================================
    Motion: the original Squarespace site's gentle movement.
