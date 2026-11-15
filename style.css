@@ -273,6 +273,64 @@ blockquote {
 }
 .button:hover { background: #818268; color: #FFF9F0; }
 
+/* ---------- Contact form ---------- */
+/* The form sits at the right of the performance photo, where
+   the social buttons used to be. Its fields copy the original
+   Squarespace form: a small label above an underline-only
+   input, no boxes. The form posts to the Cloudflare Worker in
+   this repo's worker/ folder; see worker/README.md. */
+.contact-form .form-field { margin-bottom: 22px; }
+.contact-form label {
+  display: block;
+  font-size: 0.9rem;
+  color: #818268;
+  margin-bottom: 4px;
+}
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form input[type="tel"],
+.contact-form textarea {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #DCB8AC;
+  padding: 8px 2px;
+  font: inherit;
+  /* Typed text uses the darker olive, not the peach body color:
+     peach on cream is too faint to read back what you typed. */
+  color: #6F6E57;
+}
+.contact-form input:focus, .contact-form textarea:focus {
+  outline: none;
+  border-bottom-color: #818268;
+}
+.contact-form textarea { resize: vertical; }
+
+/* First and Last Name share a row, like the original's Name
+   field; on narrow screens they stack. */
+.form-row { display: flex; gap: 24px; }
+.form-row .form-field { flex: 1; }
+@media (max-width: 640px) {
+  .form-row { flex-direction: column; gap: 0; }
+}
+
+/* The newsletter checkbox and its label sit on one line. */
+.form-check { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; }
+.form-check label { margin: 0; font-size: 0.95rem; }
+.form-check input { width: 18px; height: 18px; accent-color: #818268; }
+
+/* The honeypot field: parked far off-screen so humans never
+   see or reach it, but it stays in the form data (display:none
+   would be easier for bots to spot and skip). */
+.hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* The Turnstile widget gets a little air around it. */
+.cf-turnstile { margin: 4px 0 18px; }
+
+/* The error line under the Submit button, in a muted brick red
+   that still sits quietly in the site's palette. */
+.form-error { color: #A4442F; }
+
 /* ---------- Footer ---------- */
 /* The original closes pages with an olive band and cream text
    (its "bright" section style), so the footer borrows that:
@@ -477,6 +535,61 @@ button.button { background: none; font: inherit; cursor: pointer; }
     animation: fade-only linear both;
     animation-timeline: view();
     animation-range: entry 0% entry 70%;
+  }
+}
+
+/* ---------- Bio page reveals, matched to the original ----------
+   The original's own settings (in its Squarespace tweak data)
+   run a site-wide animation with type "slide" and style "fade":
+   every element, headings, paragraphs and images one by one,
+   fades in while sliding up, 0.6s long, "ease" curve, with a
+   0.6s delay, triggered the moment the element scrolls into
+   view. The Press quotes get exactly that: each quote is its
+   own element, and each attribution line is another, animating
+   right after its quote.
+
+   The general reveal above cannot feel like that, for two
+   reasons. It is scroll-scrubbed, so a block only moves while
+   the visitor is actively scrolling, and it stretches the
+   motion across 70% of the block's entry, so a tall press
+   quote spends a long stretch of scrolling half-faded and
+   reads as no animation at all. These Bio rules fix both:
+   the motion completes across a short 38% of entry, so it
+   plays through promptly as the block arrives, and the
+   keyframes below are shaped like the original's "ease"
+   curve (most of the distance early, a gentle settle at the
+   end) instead of the dead-linear crawl. The quotes' source
+   lines start a little later into their entry than the
+   quotes themselves, which stands in for the original's
+   per-element delay: quote first, attribution following.
+
+   Honest limit: pure CSS scroll-driven animation is tied to
+   scroll position, so it cannot reproduce the original's
+   timed play-through (0.6s delay, then 0.6s of motion, even
+   if the visitor stops scrolling). This is the closest CSS
+   can get. Scoped to the Bio page via the "bio" class on its
+   <main>, so the other pages keep the reveal they already
+   have. Same safety as the rest of this section: everything
+   lives inside @supports, so a browser without scroll-driven
+   animations shows the content plainly, and the reduced
+   motion block below switches all of it off. */
+@keyframes bio-rise {
+  from { opacity: 0; transform: translateY(28px); }
+  60% { opacity: 0.9; transform: translateY(7px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@supports (animation-timeline: view()) {
+  main.bio h2, main.bio p, main.bio blockquote,
+  main.bio .side-by-side:not(.bio-hero) img {
+    animation: bio-rise linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 38%;
+  }
+  /* The attribution trails its quote, as on the original. */
+  main.bio .press-source {
+    animation: bio-rise linear both;
+    animation-timeline: view();
+    animation-range: entry 8% entry 46%;
   }
 }
 
