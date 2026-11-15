@@ -28,8 +28,8 @@ setTimeout(function () {
   }
 }, 2000);
 </script>
-<link rel="stylesheet" href="style.css?t=1794764981">
-<script src="animations.js?t=1794764981" defer></script>
+<link rel="stylesheet" href="style.css?t=1794766089">
+<script src="animations.js?t=1794766089" defer></script>
 </head>
 <body class="post-page">
 
@@ -74,10 +74,18 @@ setTimeout(function () {
     <p class="reveal"><strong>Musical Musings</strong></p>
     <p class="reveal">I am happy to share that I was awarded the First Prize at the Virginia Hawk Vocal Awards last month. I spent a lovely day sharing music with old and new friends in a lovely hall.</p>
 
-    <img class="reveal" src="assets/img/blog-hawk-awards.jpg" alt="Virginia Hawk Vocal Awards">
-
     <p class="reveal">I can&rsquo;t lie, I&rsquo;m not the best at competing. I don&rsquo;t know why, but I get way more nervous doing competitions than auditions or even performing, so I was very happy with how I did. I&rsquo;m even more excited to invest that prize money in some new recordings for the next audition season.</p>
     <p class="reveal">The grind never ends!</p>
+
+    <!-- On the original this photo comes AFTER the "I can't
+         lie" paragraph and its "The grind never ends!" tail
+         (checked in its markup's block order), not right
+         after the award announcement, where an earlier pass
+         put it. The grind line is the tail of that paragraph
+         there, set off by line breaks; here it is its own
+         paragraph, which renders the same. -->
+    <img class="reveal" src="assets/img/blog-hawk-awards.jpg" alt="Virginia Hawk Vocal Awards">
+
     <p class="reveal">Speaking of the grind, in my quest to continue growing my studio, YOU can help. Yes, YOU! by leaving a review on my Google Business Profile, you can help me</p>
     <!-- On the original this link is plain underlined text in
          a left-aligned paragraph, not a button. -->
