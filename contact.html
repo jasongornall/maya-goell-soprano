@@ -32,8 +32,8 @@ setTimeout(function () {
   }
 }, 2000);
 </script>
-<link rel="stylesheet" href="style.css?t=1794767031">
-<script src="animations.js?t=1794767031" defer></script>
+<link rel="stylesheet" href="style.css?t=1794768338">
+<script src="animations.js?t=1794768338" defer></script>
 </head>
 <!-- contact-page + hdr-dark: on the original this page's header
      floats over the hero photo with cream text (its "black"
@@ -118,7 +118,10 @@ setTimeout(function () {
               <input id="cf-last" name="lastName" type="text" required autocomplete="family-name">
             </div>
           </div>
-          <div class="form-field">
+          <!-- field-email / field-phone: spacing hooks only
+               (see the form spacing note in style.css). The
+               fields themselves are unchanged. -->
+          <div class="form-field field-email">
             <label for="cf-email">Email (required)</label>
             <input id="cf-email" name="email" type="email" required autocomplete="email">
           </div>
@@ -126,7 +129,7 @@ setTimeout(function () {
             <input id="cf-news" name="newsletter" type="checkbox">
             <label for="cf-news">Sign up for news and updates</label>
           </div>
-          <div class="form-field">
+          <div class="form-field field-phone">
             <label for="cf-phone">Phone</label>
             <input id="cf-phone" name="phone" type="tel" autocomplete="tel">
           </div>
