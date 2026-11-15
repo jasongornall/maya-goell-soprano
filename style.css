@@ -584,7 +584,13 @@ html.gallery-page, body.gallery-page { overflow-x: clip; }
    also floated the title some 85px too high on the page;
    the original's markup order says otherwise, and rendered
    wins). The spacing below reproduces the rendered stack:
-   the post starts a little lower (the 48px top margin),
+   the post's top margin was 48px at first, but a round-9
+   comparison found the whole header stack (byline and
+   title) sitting about 25 to 30px lower on ours than on
+   the original while every internal gap in the stack
+   already matched, so the top margin is 21px now and the
+   stack rides up bodily; the internal spacing below is
+   untouched by that change.
    the date line sits above the title with a rendered gap
    of about 70px between the two lines of text (a round-8
    comparison read ours at about 45px with the margin at
@@ -599,7 +605,7 @@ html.gallery-page, body.gallery-page { overflow-x: clip; }
    its own centered line above its paragraph (a <br> pair
    does that in the page), in the Summer post they stand
    alone as their own paragraphs. */
-.post { width: 912px; max-width: 100%; margin: 48px auto 64px; text-align: center; }
+.post { width: 912px; max-width: 100%; margin: 21px auto 64px; text-align: center; }
 @media (max-width: 800px) {
   .post { width: auto; }
 }
@@ -622,6 +628,22 @@ html.gallery-page, body.gallery-page { overflow-x: clip; }
    its bottom margin is 109px, the 24px plus the missing
    85px. */
 .post img.img-gap { margin-top: 100px; margin-bottom: 109px; }
+
+/* The Summer post's Hawk Awards photo: our file IS the
+   original's full image (940x788, the exact dimensions its
+   markup records, checked against its CDN renditions in
+   round 9; there is no taller or wider original to swap
+   in), but the original's block does not show it at its
+   natural shape: rendered there it measures about 915px
+   wide by 475px tall, a wide frame the taller photo is
+   cropped into, with the center focal point (0.5, 0.5) its
+   markup records. So the frame is reproduced here the
+   same way as the Lessons and Contact crops: aspect-ratio
+   plus object-fit cover, centered, at side-by-side widths.
+   The class is on that one photo only. */
+@media (min-width: 801px) {
+  .post img.hawk-photo { width: 100%; aspect-ratio: 915 / 475; object-fit: cover; }
+}
 
 /* The Fall post's later section heads (the bold lead-in
    paragraphs after the first) each carry extra air above
@@ -980,6 +1002,29 @@ main.flush-top { padding-bottom: 52px; }
 .form-check { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
 .form-check label { margin: 0; font-size: 0.85rem; }
 .form-check input { width: 18px; height: 18px; accent-color: #818268; }
+
+/* The stack above the Message field still ran long in
+   total: a round-9 comparison found our form drifting
+   progressively lower than the original's (Name about
+   10px low, Email about 20px, the checkbox, Phone and
+   Message about 25px), while the Message-to-Submit span
+   itself matched, so the excess is spread across the gaps
+   above Message rather than sitting in any one of them.
+   About 7px comes out of each of the three spans above
+   Message: the Name row's bottom margin (22 to 15), the
+   checkbox row's bottom margin (12 to 5; the checkbox is
+   the Email field's own option, so that is the Email
+   span), and the Phone field's bottom margin (16 to 9).
+   The Email field's own 6px bottom margin (the original's
+   option offset, set in round 8) and everything from the
+   Message label down (textarea, Turnstile spacing,
+   Submit) stay exactly as they are. Desktop widths only,
+   where the drift was measured. */
+@media (min-width: 801px) {
+  .contact-form .form-row .form-field { margin-bottom: 15px; }
+  .contact-form .form-check { margin-bottom: 5px; }
+  .contact-form .field-phone { margin-bottom: 9px; }
+}
 
 /* The honeypot field: parked far off-screen so humans never
    see or reach it, but it stays in the form data (display:none
@@ -1432,7 +1477,13 @@ button.button { background: none; font: inherit; cursor: pointer; }
 /* BOTH expect photos stand in TALLER frames than their own
    shape on the original, and both blocks fill the frame and
    crop. Row 2's came first: rendered there it measures
-   about 480px wide by 380px tall, while the photo itself
+   about 480px wide by 365px tall (a round-5 reading said
+   380px; measurements of these bottom-of-page photos
+   wobble by tens of pixels between rounds, and the
+   round-9 comparison's 365px is the latest, with the
+   block's own markup, data-is-image-stretched with a
+   center focal point, confirming the cover-crop either
+   way), while the photo itself
    is 1376x768 (about 268px tall at that width), and a
    round-5 comparison caught ours showing the short natural
    shape. Row 1's was then believed to keep its natural
@@ -1453,7 +1504,7 @@ button.button { background: none; font: inherit; cursor: pointer; }
    natural shapes. */
 @media (min-width: 801px) {
   .expect-row:not(.expect-row-2) .side-photo { aspect-ratio: 480 / 420; object-fit: cover; }
-  .expect-row-2 .side-photo { aspect-ratio: 480 / 380; object-fit: cover; }
+  .expect-row-2 .side-photo { aspect-ratio: 480 / 365; object-fit: cover; }
 }
 /* At desktop width the expect rows follow the original's own
    grid placement, read from its markup once a visual
@@ -1474,10 +1525,11 @@ button.button { background: none; font: inherit; cursor: pointer; }
   /* Row 2's photo is the SAME width as row 1's, not narrower:
      in the original's markup both expect images span 8 of
      its 24 grid columns. Its height comes from the frame
-     rule above (480 by 380, cover-cropped), not from the
-     photo's own 1376x768 shape: two comparisons in a row
-     measured the original's row-2 photo at about 480 by
-     380px, and the rendered page outranks the aspect-ratio
+     rule above (480 by 365, cover-cropped), not from the
+     photo's own 1376x768 shape: comparisons have measured
+     the original's row-2 photo at about 480 by 365px (an
+     earlier pair of readings said 380px; the rendered page
+     outranks the aspect-ratio
      arithmetic that once argued for 268px here. Ours had
      row 2 at 418px wide from an earlier grid reading. */
   .expect-row-2 .side-photo { width: 480px; margin-left: 121px; }
