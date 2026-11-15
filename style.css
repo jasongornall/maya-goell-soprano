@@ -1251,8 +1251,12 @@ button.cal-day:hover { background: rgba(220, 184, 172, 0.6); }
    (#6e6e6e0d). Ours carried a warm tan (#EDDDD2) here and
    read visibly warmer than the original's grey (round-11
    comparison), so the original's own value it is. The
-   number stays pale pink, just bold. */
-.cal-day.today { background: #6e6e6e1a; font-weight: 700; }
+   number stays pale pink at the same weight as every other
+   day: the original's calendar does not bold today's numeral
+   (round-12 zoomed comparison showed ours bold/darker while
+   the original's numerals are uniformly pale, today included),
+   so this rule sets only the background tint. */
+.cal-day.today { background: #6e6e6e1a; }
 
 /* The month's events listed under the grid; each entry is a
    button that opens the same popup as clicking the day. */
