@@ -9,7 +9,27 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?t=1794758873">
+<!-- Animations, step one of two: this script runs before
+     anything on the page paints and flags the page as
+     "JavaScript is on". That flag is what lets style.css start
+     the .reveal blocks hidden (see the Motion section there);
+     without JavaScript the flag never appears and every block
+     simply shows, so nothing can be left invisible. Step two
+     is animations.js, loaded below, which watches the blocks
+     and reveals each as it scrolls into view. The setTimeout
+     is a safety net: if animations.js ever fails to load, the
+     flag comes back off and the page shows plainly instead of
+     staying hidden. -->
+<script>
+document.documentElement.classList.add("js-reveal");
+setTimeout(function () {
+  if (!window.mayaRevealReady) {
+    document.documentElement.classList.remove("js-reveal");
+  }
+}, 2000);
+</script>
+<link rel="stylesheet" href="style.css?t=1794759662">
+<script src="animations.js?t=1794759662" defer></script>
 </head>
 <body>
 
@@ -32,13 +52,13 @@
   <!-- Order matches the original: heading first, then the piano
        photo at the left beside the intro text at the right, with
        the trial-lesson call to action as a bordered button. -->
-  <h1>Music Lessons</h1>
+  <h1 class="reveal">Music Lessons</h1>
 
   <div class="side-by-side">
-    <img class="side-photo" src="assets/img/lessons-hero.jpg" alt="Music lessons">
+    <img class="side-photo reveal" src="assets/img/lessons-hero.jpg" alt="Music lessons">
     <div class="side-main lessons-intro">
-      <p>Looking for a music teacher in San Diego, California? Based in La Jolla, Maya Goell teaches voice, piano, and music theory at all levels.</p>
-      <p><a class="button" href="contact.html">Get in touch and book a trial lesson!</a></p>
+      <p class="reveal">Looking for a music teacher in San Diego, California? Based in La Jolla, Maya Goell teaches voice, piano, and music theory at all levels.</p>
+      <p class="reveal"><a class="button" href="contact.html">Get in touch and book a trial lesson!</a></p>
     </div>
   </div>
 
@@ -48,22 +68,22 @@
        answers included, is in the accent olive there, which the
        .faq wrapper carries. -->
   <div class="faq">
-  <h2 class="faq-heading">FAQ&rsquo;s</h2>
+  <h2 class="faq-heading reveal">FAQ&rsquo;s</h2>
 
-  <p class="faq-q">Am I old enough/ good enough/ talented enough to study music?</p>
-  <p>Yes. next question.</p>
+  <p class="faq-q reveal">Am I old enough/ good enough/ talented enough to study music?</p>
+  <p class="reveal">Yes. next question.</p>
 
-  <p class="faq-q">What instruments do you teach?</p>
-  <p>I specialize in voice, but I also teach piano, guitar, ukulele, and bass.</p>
+  <p class="faq-q reveal">What instruments do you teach?</p>
+  <p class="reveal">I specialize in voice, but I also teach piano, guitar, ukulele, and bass.</p>
 
-  <p class="faq-q">What are your qualifications? Why should I study with you?</p>
-  <p>There are lots of music teachers out there, so what sets me apart? I am a professional opera singer, so not only do I have a comprehensive understanding of classical vocal technique, but I also know what it takes to make a career out of music. I take pride in helping my students cultivate not only technical ability, but also artistic sensibility, musical literacy, and the joy of music in their artistic practices.</p>
+  <p class="faq-q reveal">What are your qualifications? Why should I study with you?</p>
+  <p class="reveal">There are lots of music teachers out there, so what sets me apart? I am a professional opera singer, so not only do I have a comprehensive understanding of classical vocal technique, but I also know what it takes to make a career out of music. I take pride in helping my students cultivate not only technical ability, but also artistic sensibility, musical literacy, and the joy of music in their artistic practices.</p>
 
-  <p class="faq-q">What is your experience teaching?</p>
-  <p>I have been teaching in some capacity for more than a decade. I have taught privately as well as with institutions such as Cal State University San Marcos, Leading Note Studios, and am currently a teaching artist with the San Diego Opera.</p>
+  <p class="faq-q reveal">What is your experience teaching?</p>
+  <p class="reveal">I have been teaching in some capacity for more than a decade. I have taught privately as well as with institutions such as Cal State University San Marcos, Leading Note Studios, and am currently a teaching artist with the San Diego Opera.</p>
 
-  <p class="faq-q">What kinds of music do you teach?</p>
-  <p>My wheelhouse is definitely classical style. I have been performing professionally for years, and classically training for more than a decade. That being said, I also have professional experience in a multitude of styles including pop, jazz, and musical theater.</p>
+  <p class="faq-q reveal">What kinds of music do you teach?</p>
+  <p class="reveal">My wheelhouse is definitely classical style. I have been performing professionally for years, and classically training for more than a decade. That being said, I also have professional experience in a multitude of styles including pop, jazz, and musical theater.</p>
   </div>
 
   <!-- "What to expect" zigzags on the original: the first
@@ -74,17 +94,17 @@
        decor files is which: on the original the right-hand photo
        comes first in the page's markup, so the files are placed
        in that same order here (decor-2 right, decor-1 left). -->
-  <h2 class="expect-heading">What to expect</h2>
+  <h2 class="expect-heading reveal">What to expect</h2>
   <div class="side-by-side expect-row">
     <div class="side-main">
-      <p>Depending on level and instrument, I like to spend about half the session doing warm-ups and technical patterns and the second half developing repertoire.</p>
+      <p class="reveal">Depending on level and instrument, I like to spend about half the session doing warm-ups and technical patterns and the second half developing repertoire.</p>
     </div>
-    <img class="side-photo" src="assets/img/lessons-decor-2.jpg" alt="">
+    <img class="side-photo reveal" src="assets/img/lessons-decor-2.jpg" alt="">
   </div>
   <div class="side-by-side expect-row">
-    <img class="side-photo" src="assets/img/lessons-decor-1.jpg" alt="">
+    <img class="side-photo reveal" src="assets/img/lessons-decor-1.jpg" alt="">
     <div class="side-main">
-      <p>This strikes the perfect balance between discipline and creative exploration. Plus, students will leave lessons with a body of work they can take anywhere from the practice room to auditions to concerts!</p>
+      <p class="reveal">This strikes the perfect balance between discipline and creative exploration. Plus, students will leave lessons with a body of work they can take anywhere from the practice room to auditions to concerts!</p>
     </div>
   </div>
 
