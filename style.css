@@ -478,7 +478,22 @@ html.gallery-page, body.gallery-page { overflow-x: clip; }
   gap: 40px;
   /* The original centers the text vertically against the photo. */
   align-items: center;
-  margin-bottom: 56px;
+  /* The run from one card to the next is about 35px on the
+     original; 56px here left the cards about 20px too far
+     apart (round-8 comparison). The LAST card keeps the
+     wider margin (see its rule below), so the air between
+     the last card and the footer does not change. */
+  margin-bottom: 34px;
+}
+.blog-card:last-of-type { margin-bottom: 56px; }
+/* The first card rides about 20px lower on the original
+   than the shared page top puts it (its title read about
+   15 to 25px higher here, round-8 comparison); the extra
+   air goes above the first card only, so the second card's
+   position still comes from the gap rule above. Desktop
+   widths, where it was measured. */
+@media (min-width: 801px) {
+  .blog-card:first-of-type { margin-top: 20px; }
 }
 /* On the rendered original the card's text starts about
    895px across a 1919px window, with the photo starting at
@@ -570,8 +585,13 @@ html.gallery-page, body.gallery-page { overflow-x: clip; }
    the original's markup order says otherwise, and rendered
    wins). The spacing below reproduces the rendered stack:
    the post starts a little lower (the 48px top margin),
-   the date line sits close above the title (14px), and a
-   wide gap of about 88px follows the title before the body.
+   the date line sits above the title with a rendered gap
+   of about 70px between the two lines of text (a round-8
+   comparison read ours at about 45px with the margin at
+   14px, so the margin is 39px now; the line boxes' own
+   half-leading makes up the rest of the rendered gap),
+   and a wide gap of about 88px follows the title before
+   the body.
    The post title is a full fluid heading: about 68.5px at
    desktop width by the original's formula, not the flat
    64px of the shared h1. Section heads inside a post are
@@ -584,7 +604,7 @@ html.gallery-page, body.gallery-page { overflow-x: clip; }
   .post { width: auto; }
 }
 .post h1 { color: #DCB8AC; font-size: 4.28rem; margin-bottom: 88px; }
-.post-date { color: #DCB8AC; text-align: center; margin-bottom: 14px; }
+.post-date { color: #DCB8AC; text-align: center; margin-bottom: 39px; }
 /* The Summer 2026 post is written entirely in the accent olive
    on the original (every paragraph carries that color), unlike
    the Fall post's peach. This class carries that one-off. */
@@ -708,6 +728,21 @@ html.post-page, body.post-page { overflow-x: clip; }
   margin-left: calc(50% - 50vw);
   padding: 0 55px;
 }
+/* The air above the pagination is deeper on the original:
+   a round-8 comparison measured the run from the author
+   avatar's bottom to the pagination title at about 185 to
+   195px there against about 110 to 115px here, a shortfall
+   of about 78px. The number below is bigger than 78
+   because of margin collapsing: the pagination <p> follows
+   the <article>, whose own bottom margin is 64px, and
+   adjacent margins collapse to the LARGER one, so a top
+   margin of 86px would only buy 22px of extra air. 142px
+   is the article's 64 plus the missing 78, and the
+   collapsed result is the full 142. Desktop widths only,
+   where it was measured; below that the shared 8px stands. */
+@media (min-width: 801px) {
+  .post-pagination { margin-top: 142px; }
+}
 .post-pagination.pagination-next { text-align: right; }
 .post-pagination.pagination-prev { text-align: left; }
 .post-pagination .pag-arrow { font-style: normal; }
@@ -765,6 +800,15 @@ html.post-page, body.post-page { overflow-x: clip; }
    top padding (the .flush-top class) so the photo touches the
    header bar. */
 .flush-top { padding-top: 0; }
+/* This page's bottom padding is 20px under the shared 72px:
+   the same round-8 comparison put the cream below the
+   portrait at about 110px here against about 65px on the
+   original, and once the portrait stands at its full 785px
+   (see the contact row rules) about 20px of the excess is
+   still in the page's bottom spacing. Only the Contact
+   page's <main> carries .flush-top, so the trim lands
+   nowhere else. */
+main.flush-top { padding-bottom: 52px; }
 .contact-hero {
   position: relative;
   margin-bottom: 56px;
@@ -853,6 +897,27 @@ html.post-page, body.post-page { overflow-x: clip; }
    input, no boxes. The form posts to the Cloudflare Worker in
    this repo's worker/ folder; see worker/README.md. */
 .contact-form .form-field { margin-bottom: 22px; }
+/* Two fields break the shared 22px, from a round-8
+   comparison of the rendered stacks: below the Email field
+   our fields drifted about 35px lower than the original's
+   by the Message field, while Submit landed in the same
+   place on both, which also left our Message-to-Submit
+   span about 32px short. The original's own form CSS (in
+   its site.css) explains the shape of its stack: every
+   field carries a 24px bottom margin, and the newsletter
+   checkbox is not a field of its own but an option INSIDE
+   the email field, set 6px under the input at 13px type
+   (.option { margin: 6px 0 4px; font-size: 13px }). Ours
+   gives the checkbox a full field gap above and below it,
+   which is where the drift lives. So: the Email field's
+   bottom margin drops to the option's own 6px, the
+   checkbox row's bottom margin and type come in (see
+   .form-check below), and the Phone field gives up 6px,
+   about 35px of tightening in all; the Message end gets
+   its share back through the textarea and Turnstile rules
+   below, so Submit stays where it was. */
+.contact-form .field-email { margin-bottom: 6px; }
+.contact-form .field-phone { margin-bottom: 16px; }
 /* Labels on the original's form are the pale dusty rose body
    color, not the olive (an earlier pass had them olive, which
    read much darker than the original side by side). Required
@@ -891,7 +956,13 @@ html.post-page, body.post-page { overflow-x: clip; }
   outline: none;
   border-bottom-color: #818268;
 }
-.contact-form textarea { resize: vertical; }
+/* The original's form CSS floors its textarea at
+   min-height: 100px; our rows=3 box rendered about 89px,
+   part of why the Message-to-Submit span measured short
+   (see .field-email above). 108px rendered, plus the
+   wider Turnstile margin below, lands the span at the
+   original's roughly 140px. */
+.contact-form textarea { resize: vertical; min-height: 108px; }
 
 /* First and Last Name share a row, like the original's Name
    field; on narrow screens they stack. */
@@ -901,9 +972,13 @@ html.post-page, body.post-page { overflow-x: clip; }
   .form-row { flex-direction: column; gap: 0; }
 }
 
-/* The newsletter checkbox and its label sit on one line. */
-.form-check { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; }
-.form-check label { margin: 0; font-size: 0.95rem; }
+/* The newsletter checkbox and its label sit on one line.
+   Its spacing and type follow the original's in-field
+   option (see the note at .field-email above): a 12px
+   bottom margin rather than a full field gap, and 13px-ish
+   type rather than near-body size. */
+.form-check { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.form-check label { margin: 0; font-size: 0.85rem; }
 .form-check input { width: 18px; height: 18px; accent-color: #818268; }
 
 /* The honeypot field: parked far off-screen so humans never
@@ -911,8 +986,14 @@ html.post-page, body.post-page { overflow-x: clip; }
    would be easier for bots to spot and skip). */
 .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
-/* The Turnstile widget gets a little air around it. */
-.cf-turnstile { margin: 4px 0 18px; }
+/* The Turnstile widget gets a little air around it. The
+   bottom margin is the wider one on purpose: the widget
+   renders nothing in invisible mode, so this margin is
+   most of the air between the Message box and Submit, and
+   the round-8 span measurement (see .field-email above)
+   puts about 32px of it here and in the textarea's
+   min-height. */
+.cf-turnstile { margin: 4px 0 32px; }
 
 /* The error line under the Submit button, in a muted brick red
    that still sits quietly in the site's palette. */
@@ -1020,8 +1101,15 @@ footer a:not(:last-child)::after { content: ","; }
    arrow about 125px past the grid's right edge, where the
    original's arrows hug the grid's edges (round-4
    comparison). */
-.cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; max-width: 718px; }
-.cal-title { font-size: 1.6rem; margin: 0; }
+/* The header's own spacing comes from the original's
+   calendar stylesheet (its calendar-block CSS): the month
+   header carries a 34px bottom margin there and the month
+   name is set at 28px. Ours had 14px and 25.6px, part of
+   why the whole calendar stood about 50px shorter than
+   the original's (round-8 comparison; the rest is in the
+   grid rules below). */
+.cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 34px; max-width: 718px; }
+.cal-title { font-size: 1.75rem; margin: 0; }
 .cal-arrow {
   background: none;
   border: 0;
@@ -1037,7 +1125,7 @@ footer a:not(:last-child)::after { content: ","; }
 /* The grid itself: seven columns, weekday header row first,
    then one cell per day. The script builds the cells.
    On the original this is a BOXED grid: every day sits in its
-   own pale cell (about 100 by 95px at desktop width), the day
+   own pale cell (about 100px square at desktop width), the day
    numbers are small and pale pink in the cell's TOP-RIGHT
    corner (the original's calendar block sets them there; an
    earlier pass had them top-left), and the weekday headers
@@ -1045,23 +1133,37 @@ footer a:not(:last-child)::after { content: ","; }
    with big centered pink numbers and a solid olive pill for
    today; the rules below are the quiet boxed look the
    original actually renders. The grid is capped at 718px so
-   the cells land at the original's roughly 100px width (with
-   the 3px gaps); uncapped, the wider box stretched them to
-   about 122px. The event list under the grid takes the same
-   cap, so it lines up with the grid above it. */
-.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; max-width: 718px; }
+   the cells land at the original's roughly 100px width;
+   uncapped, the wider box stretched them to about 122px.
+   The event list under the grid takes the same cap, so it
+   lines up with the grid above it.
+   The grid's fine spacing follows the original's calendar
+   stylesheet too: its grid is a table with 4px
+   border-spacing, which puts 4px between every pair of
+   cells AND around the table's outer edges, so the gap
+   here is 4px and a 4px padding stands in for the edge
+   spacing a grid gap cannot make (the cells then work out
+   to 98px wide, the original's own figure). Its weekday
+   row is a 12px line with 10px of padding under it, 22px
+   in all. And its day cells stand essentially square
+   against that 98px width; ours were 95px, and between
+   the header above and these three the calendar ran
+   about 50px shorter than the original's by its bottom
+   edge (round-8 comparison), so the cells are 100px. */
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; padding: 4px; max-width: 718px; }
 .cal-dow {
   text-align: center;
   font-size: 0.75rem;
   font-weight: 400;
   letter-spacing: 0.08em;
   color: #C2C293;
-  padding: 6px 0;
+  line-height: 1;
+  padding: 0 0 10px;
 }
 .cal-day {
   position: relative;
   text-align: right;
-  height: 95px;
+  height: 100px;
   padding: 6px 8px;
   border-radius: 0;
   font: inherit;
@@ -1073,7 +1175,7 @@ footer a:not(:last-child)::after { content: ","; }
 @media (max-width: 800px) {
   .cal-day { height: 48px; }
 }
-/* Tablet widths take a step between the desktop 95px and
+/* Tablet widths take a step between the desktop 100px and
    the phone 48px: at 48px the roughly 96px-wide tablet
    cells render as squat 2:1 boxes (responsive re-audit),
    so the 641-800px band gets 72px. */
@@ -1393,6 +1495,16 @@ button.button { background: none; font: inherit; cursor: pointer; }
      section's 285 + 121 + 480 + 48 + 146 = 1080. */
   .expect-row-2 .side-main { flex: 0 1 360px; margin-left: 146px; }
 }
+/* Row 2's text starts lower against its photo on the
+   original than row 1's does: a round-8 comparison put its
+   first line about 70px below the photo's top there
+   against about 15px here (the rows align at the top, so
+   ours starts at the top). 55px of padding inside the
+   text block makes up the difference. Side-by-side widths
+   only; stacked, the offset would just be a gap. */
+@media (min-width: 801px) {
+  .expect-row-2 .side-main { padding-top: 55px; }
+}
 
 /* Engagements title: on the original it is not a heading at
    all but a bold paragraph in a "scaled text" box, which is
@@ -1548,7 +1660,15 @@ body.contact-page header { position: fixed; top: 0; left: 0; right: 0; }
 }
 @media (min-width: 1000px) {
   .contact-row { gap: 135px; margin-top: 50px; }
-  .contact-row .side-photo { width: 663px; }
+  /* The height is stated outright at this width, not left
+     to the aspect-ratio above: a round-8 comparison found
+     the portrait rendering about 760px tall here against
+     the original's about 785, some 25px short of the frame
+     the ratio should have given at the pinned 663px width.
+     With the width pinned, an explicit height cannot land
+     anywhere else. (The ratio rule still shapes the photo
+     between 801 and 999px, where the width is fluid.) */
+  .contact-row .side-photo { width: 663px; height: 785px; }
   /* The form itself starts lower than the photo's top on
      the original: a round-7 comparison found the whole
      form block (labels, fields, Submit) sitting about
@@ -1600,6 +1720,15 @@ main.page-bio { padding-bottom: 16.5vmax; }
    gutter at both sides. */
 @media (min-width: 801px) {
   main.page-lessons { padding-left: calc(2vw + 63px); padding-right: calc(2vw + 63px); }
+}
+/* The Lessons page also ends deeper than the shared rhythm:
+   a round-8 comparison measured the cream below the last
+   expect row's photo at about 130px on the original against
+   about 40px here, so this page's bottom padding carries
+   the missing 90px on top of the shared 72px. Desktop
+   widths only, where it was measured. */
+@media (min-width: 801px) {
+  main.page-lessons { padding-bottom: 162px; }
 }
 
 /* ---------- Responsive type steps ----------
