@@ -71,10 +71,14 @@ nav a {
   color: #818268;
   text-decoration: none;
   font-size: 1rem;
+  /* Gentle color ease on hover, like the original's soft
+     transitions (see the Motion section at the bottom). */
+  transition: color 0.25s ease;
 }
 /* The original underlines the nav item for the page you are on,
    so the .active link in each page's nav gets the underline. */
 nav a:hover, nav a.active { text-decoration: underline; text-underline-offset: 4px; }
+nav a:hover { color: #6F6E57; }
 
 /* ---------- General content ---------- */
 main { padding: 56px 0 72px; }
@@ -263,6 +267,9 @@ blockquote {
   color: #818268;
   text-decoration: none;
   margin: 6px 0 14px;
+  /* The fill fades in on hover instead of snapping, matching
+     the original's gentle hover feel. */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 .button:hover { background: #818268; color: #FFF9F0; }
 
@@ -279,8 +286,228 @@ footer {
   padding: 72px 20px 84px;
   font-size: 0.95rem;
 }
-footer a { color: #FFF9F0; margin: 0 10px; }
+footer a { color: #FFF9F0; margin: 0 10px; transition: opacity 0.25s ease; }
+footer a:hover { opacity: 0.8; }
 
 /* The embedded event calendar on the Engagements page needs
    a fixed height or it collapses to nothing. */
 .calendar-embed { width: 100%; height: 700px; border: 0; }
+
+/* ---------- Engagements month calendar ---------- */
+/* Like the original, the Engagements page puts a month grid on
+   the left and the PosterMyWall widget on the right. The grid
+   is drawn by the small script at the bottom of
+   engagements.html from events.json (see README, "Updating the
+   calendar"); everything below is just how it looks. On narrow
+   screens the two halves stack. */
+.calendar-row { display: flex; gap: 48px; align-items: flex-start; }
+.cal-box { flex: 1; }
+.cal-widget { flex: 1; }
+@media (max-width: 800px) {
+  .calendar-row { flex-direction: column; }
+  .cal-box, .cal-widget { width: 100%; }
+}
+
+/* Month name with a prev/next arrow on each side. */
+.cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.cal-title { font-size: 1.6rem; margin: 0; }
+.cal-arrow {
+  background: none;
+  border: 1px solid #818268;
+  color: #818268;
+  width: 38px;
+  height: 38px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+.cal-arrow:hover { background: #818268; color: #FFF9F0; }
+
+/* The grid itself: seven columns, weekday header row first,
+   then one cell per day. The script builds the cells. */
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.cal-dow {
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #818268;
+  padding: 6px 0;
+}
+.cal-day {
+  position: relative;
+  text-align: center;
+  padding: 9px 0;
+  border-radius: 6px;
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+}
+.cal-blank { background: none; }
+/* Days with events are real <button>s: bold olive text on a
+   soft rose wash, so they read as "something is here, click". */
+button.cal-day { font-weight: 700; color: #818268; background: rgba(220, 184, 172, 0.35); cursor: pointer; transition: background-color 0.25s ease; }
+button.cal-day:hover { background: rgba(220, 184, 172, 0.6); }
+/* Today gets the solid olive treatment so it jumps out. */
+.cal-day.today { background: #818268; color: #FFF9F0; font-weight: 700; }
+
+/* The month's events listed under the grid; each entry is a
+   button that opens the same popup as clicking the day. */
+.cal-event-list { list-style: none; margin-top: 24px; }
+.cal-event-list li { margin-bottom: 10px; }
+.cal-event-btn {
+  font: inherit;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid #DCB8AC;
+  color: #818268;
+  cursor: pointer;
+  padding: 2px 0;
+  text-align: left;
+  transition: color 0.25s ease;
+}
+.cal-event-btn:hover { color: #6F6E57; }
+.cal-none { margin-top: 24px; font-style: italic; }
+
+/* ---------- Event popup ---------- */
+/* Clicking an event opens this small card over a dimmed
+   backdrop. The script in engagements.html fills it in and
+   shows/hides it via the hidden attribute; the [hidden] rule
+   below matters because display: flex would otherwise override
+   the attribute and leave the popup stuck on screen. */
+.cal-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(43, 40, 32, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.cal-modal-backdrop[hidden] { display: none; }
+.cal-modal {
+  position: relative;
+  background: #FFF9F0;
+  width: 100%;
+  max-width: 430px;
+  padding: 32px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+.cal-modal h3 { margin: 0 36px 10px 0; font-size: 1.5rem; }
+.cal-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: none;
+  border: 0;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: #818268;
+  cursor: pointer;
+}
+.cal-modal-add { margin: 20px 0 4px; color: #818268; }
+/* The .ics control is a real <button> wearing the .button
+   styles; buttons do not inherit the page font on their own,
+   so hand it over explicitly. */
+button.button { background: none; font: inherit; cursor: pointer; }
+
+/* ============================================================
+   Motion — the original Squarespace site's gentle movement:
+   content fades in and rises a little as it scrolls into view,
+   heroes fade in on load, and the header settles into its solid
+   bar as you start scrolling. All of it is plain CSS.
+
+   SAFETY, and why this section is built the way it is: the
+   hidden "before" states exist ONLY inside the animations
+   below. The scroll effects are wrapped in @supports, so a
+   browser without scroll-driven animations simply never
+   applies them and everything sits fully visible, exactly as
+   it did before this section existed. The load-in fades are
+   ordinary timed animations that always run to the visible
+   end state. No element can be left invisible by this code.
+   ============================================================ */
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-only {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+/* The header starts transparent and picks up its cream
+   background and shadow over the first stretch of scrolling. */
+@keyframes header-settles {
+  from { background-color: rgba(255, 249, 240, 0); box-shadow: 0 0 0 rgba(0, 0, 0, 0); }
+  to { background-color: #FFF9F0; box-shadow: 0 0 10px rgba(0, 0, 0, 0.08); }
+}
+
+/* Load-in: heroes and page titles fade in when the page opens.
+   (Page titles: the h1 is a direct child of <main> everywhere
+   except the Bio hero and the Contact hero, whose whole hero
+   blocks fade as one piece instead.) */
+.bio-hero, .contact-hero, .hero-img, main > h1 { animation: fade-in 0.9s ease-out; }
+
+/* Scroll reveals: each block fades and rises as it enters the
+   screen, the way Squarespace's fade animation behaves. The
+   animation-range says "play across the part where the block
+   is entering", so anything already on screen when the page
+   loads lands on its finished, visible state immediately.
+   Gallery photos get a fade with no rise: a transform on
+   photos inside the CSS-columns layout can make the columns
+   repaint oddly mid-animation in some browsers. Blog card
+   photos ride along with their card instead of animating
+   twice. Headings h2-h4 are here; h1 is load-in only (above). */
+@supports (animation-timeline: view()) {
+  main h2, main h3, main h4,
+  main p, main blockquote,
+  main img:not(.blog-card img, .gallery-cols img),
+  .blog-card, .video-grid iframe, .calendar-embed, .cal-box {
+    animation: rise-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 70%;
+  }
+  .gallery-cols img {
+    animation: fade-only linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 70%;
+  }
+}
+
+/* The header settle, driven by page scroll position: solid by
+   about 140px of scrolling. Outside @supports the header just
+   keeps the solid style from its base rule, as before. */
+@supports (animation-timeline: scroll()) {
+  header {
+    animation: header-settles linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0px 140px;
+  }
+}
+
+/* Hover life on images: a whisper of brightness, nothing more.
+   The transition lives here so the change eases both ways. */
+.gallery-cols img, .blog-card img { transition: filter 0.4s ease; }
+.gallery-cols img:hover, .blog-card img:hover { filter: brightness(1.07); }
+.blog-card .card-title a { transition: color 0.25s ease; }
+.blog-card .card-title a:hover { color: #818268; }
+
+/* Reduced motion: some visitors ask their system for no
+   animation, and that request wins over everything above.
+   Note this removes the animations outright rather than just
+   shortening them: scroll-driven animations ignore duration,
+   so a tiny duration would not actually stop them. Because
+   the hidden states live only inside the animations, taking
+   the animations away leaves every element fully visible. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
