@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?t=1794756054">
+<link rel="stylesheet" href="style.css?t=1794756812">
 </head>
 <body>
 
@@ -25,31 +25,46 @@
   </nav>
 </header>
 
-<main class="wrap">
+<!-- This page's <main> is NOT wrapped in the .wrap column: the
+     hero photo runs edge to edge like the original. The content
+     below the hero goes back inside a .wrap div. -->
+<main class="flush-top">
 
-  <img class="hero-img" src="assets/img/contact-hero.jpg" alt="">
+  <!-- Full-bleed hero: the opera-house photo edge to edge, with
+       the heading and intro text overlaid on it in white,
+       centered, as on the original. -->
+  <section class="contact-hero">
+    <img src="assets/img/contact-hero.jpg" alt="">
+    <div class="contact-hero-text">
+      <h1>Let&rsquo;s work together</h1>
+      <p>Interested in working together? Fill out some info and we will be in touch shortly! We can&rsquo;t wait to hear from you!</p>
+    </div>
+  </section>
 
-  <h1>Let&rsquo;s work together</h1>
-
-  <p>Interested in working together? Fill out some info and we will be in touch shortly! We can&rsquo;t wait to hear from you!</p>
-
-  <!-- PLACEHOLDER: The live Squarespace page collects messages through
-       a Squarespace form, and a static site cannot run a form by
-       itself (there is no server to receive it). The live site shows
-       no email address, so none is invented here. To finish this
-       page, either:
-         1. add Maya's real email as a mailto: link below, or
-         2. sign up for a free form service (e.g. Formspree) and
-            paste its form markup here.
-       Until then, visitors are pointed at her social profiles,
-       which are the contact routes the live site does publish. -->
-  <p>The fastest way to reach Maya right now is through her social profiles:</p>
-  <p>
-    <a class="button" href="https://www.instagram.com/maya_goell_/">Instagram</a>
-    <a class="button" href="https://www.facebook.com/maya.goell">Facebook</a>
-  </p>
-
-  <img class="hero-img" src="assets/img/dsc05728.jpg" alt="Maya Goell performance photo">
+  <div class="wrap">
+    <!-- Below the hero, like the original: the performance photo
+         at the left and the contact block at the right. -->
+    <div class="side-by-side">
+      <img class="side-photo" src="assets/img/dsc05728.jpg" alt="Maya Goell performance photo">
+      <div class="side-main">
+        <!-- PLACEHOLDER: The live Squarespace page collects messages
+             through a Squarespace form, and a static site cannot run
+             a form by itself (there is no server to receive it). The
+             live site shows no email address, so none is invented
+             here. To finish this page, either:
+               1. add Maya's real email as a mailto: link below, or
+               2. sign up for a free form service (e.g. Formspree) and
+                  paste its form markup here.
+             Until then, visitors are pointed at her social profiles,
+             which are the contact routes the live site does publish. -->
+        <p>The fastest way to reach Maya right now is through her social profiles:</p>
+        <p>
+          <a class="button" href="https://www.instagram.com/maya_goell_/">Instagram</a>
+          <a class="button" href="https://www.facebook.com/maya.goell">Facebook</a>
+        </p>
+      </div>
+    </div>
+  </div>
 
 </main>
 
