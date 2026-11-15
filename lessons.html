@@ -28,13 +28,14 @@ setTimeout(function () {
   }
 }, 2000);
 </script>
-<link rel="stylesheet" href="style.css?t=1794759662">
-<script src="animations.js?t=1794759662" defer></script>
+<link rel="stylesheet" href="style.css?t=1794760291">
+<script src="animations.js?t=1794760291" defer></script>
 </head>
 <body>
 
-<!-- hdr-bold: this page's header starts with the pale sage nav
-     of the original's "bold" section theme (see style.css). -->
+<!-- hdr-bold: a leftover class from an earlier pass; it no
+     longer changes the header's colors (the rendered original
+     shows dark olive nav at the top). See style.css. -->
 <header class="hdr-bold">
   <div class="site-title"><a href="index.html">Maya Goell Soprano</a></div>
   <nav>
@@ -47,18 +48,21 @@ setTimeout(function () {
   </nav>
 </header>
 
-<main class="wrap">
+<main class="wrap page-lessons">
 
   <!-- Order matches the original: heading first, then the piano
        photo at the left beside the intro text at the right, with
-       the trial-lesson call to action as a bordered button. -->
-  <h1 class="reveal">Music Lessons</h1>
+       the trial-lesson call to action as a bordered button.
+       .lessons-title and .lessons-intro-row carry this page's
+       measured look from style.css: a darker, bolder heading,
+       a 495px photo, and a narrow 480px text column. -->
+  <h1 class="lessons-title reveal">Music Lessons</h1>
 
-  <div class="side-by-side">
+  <div class="side-by-side lessons-intro-row">
     <img class="side-photo reveal" src="assets/img/lessons-hero.jpg" alt="Music lessons">
     <div class="side-main lessons-intro">
       <p class="reveal">Looking for a music teacher in San Diego, California? Based in La Jolla, Maya Goell teaches voice, piano, and music theory at all levels.</p>
-      <p class="reveal"><a class="button" href="contact.html">Get in touch and book a trial lesson!</a></p>
+      <p class="reveal"><a class="button lessons-cta" href="contact.html">Get in touch and book a trial lesson!</a></p>
     </div>
   </div>
 
@@ -101,7 +105,7 @@ setTimeout(function () {
     </div>
     <img class="side-photo reveal" src="assets/img/lessons-decor-2.jpg" alt="">
   </div>
-  <div class="side-by-side expect-row">
+  <div class="side-by-side expect-row expect-row-2">
     <img class="side-photo reveal" src="assets/img/lessons-decor-1.jpg" alt="">
     <div class="side-main">
       <p class="reveal">This strikes the perfect balance between discipline and creative exploration. Plus, students will leave lessons with a body of work they can take anywhere from the practice room to auditions to concerts!</p>
