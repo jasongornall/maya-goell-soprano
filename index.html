@@ -9,14 +9,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?t=1794757748">
+<link rel="stylesheet" href="style.css?t=1794758616">
 </head>
 <body>
 
 <!-- Header and nav are repeated in every page file on purpose:
      with plain static hosting there is no template engine, and
      copy-paste keeps the site build-free and easy to read. -->
-<header>
+<!-- The hdr-bold class tells style.css this page's header
+     starts with the pale sage nav of the original's "bold"
+     section theme (see "Header colors, per page" there). -->
+<header class="hdr-bold">
   <div class="site-title"><a href="index.html">Maya Goell Soprano</a></div>
   <nav>
     <a href="index.html" class="active">Bio</a>
@@ -35,7 +38,8 @@
 <main class="wrap bio">
 
   <!-- Hero, arranged like the original: the name very large in
-       two lines at the left, the portrait at the right. -->
+       two lines, centered in the left column, the portrait at
+       the right. -->
   <div class="side-by-side bio-hero">
     <h1 class="hero-name side-main">Maya<br>Goell</h1>
     <img class="side-photo" src="assets/img/headshot-park.jpg" alt="Maya Goell">
@@ -43,16 +47,16 @@
 
   <!-- About, also side by side like the original: bio text in
        the left column, the stage photo in the right column. -->
-  <h2>About the Artist</h2>
+  <h2 class="about-heading">About the Artist</h2>
   <div class="side-by-side">
-    <div class="side-main">
+    <div class="side-main about-text">
       <p>Maya Goell is a soprano based in California. She began her training at the San Francisco School of the Arts where she was named a California Art Scholar and National Youngarts Winner. She went on to earn a Bachelors at the University of British Columbia and a Masters at the San Francisco Conservatory of Music. Highlights of her career include singing La Feau in Ravel&rsquo;s <em>L&rsquo;enfant et les Sortil&egrave;ges</em>, Meg March in Jason Howland&rsquo;s <em>Little Women</em>, Maria Bertram in Jonathan Dove&rsquo;s <em>Mansfield Park</em>, La Contessa di Folleville in Rossini&rsquo;s <em>Il Viaggio a Reims</em>, and Yvette in Mieczys&#322;aw Weinberg&rsquo;s <em>Pasa&#380;erka</em>.</p>
       <p>As a multidisciplinary artist who believes in live performance as the bridge between social theory and praxis to evolve the culture we live in, Ms. Goell has worked with leading contemporary composers such as Mason Bates, Ricky Ian Gordan, Ben Moore, and Jodi Goble. She also works with the Bay Area Arts Alliance&rsquo;s Opus Project to frequently perform the works of emerging composers in the Bay Area.</p>
     </div>
-    <img class="side-photo" src="assets/img/au-secours.jpg" alt="Maya Goell performing on stage">
+    <img class="side-photo about-photo" src="assets/img/au-secours.jpg" alt="Maya Goell performing on stage">
   </div>
 
-  <h2>Press</h2>
+  <h2 class="press-heading">Press</h2>
 
   <blockquote>&ldquo;Because while &lsquo;Poncho Rabbit&rsquo; might present itself as a children&rsquo;s opera, it tackles some of the most polarizing events gripping the nation today&rdquo;</blockquote>
   <p class="press-source">&mdash;<a href="https://www.nytimes.com/2026/02/02/arts/music/pancho-rabbit-and-the-coyote-children-opera.html">The New York Times</a></p>
