@@ -30,10 +30,10 @@ body {
   background: #FFF9F0;
 }
 
-/* Page column: the original is a wide, airy layout (its content
-   area runs up to 1500px with wide side gutters). 1100px keeps
-   that open feel while holding text lines to a readable length. */
-.wrap { max-width: 1100px; margin: 0 auto; padding: 0 4vw; }
+/* Page column: the original is a wide, airy layout whose content
+   area runs to about 1450px, so the column matches that width.
+   The 4vw side padding keeps a gutter on smaller screens. */
+.wrap { max-width: 1450px; margin: 0 auto; padding: 0 4vw; }
 
 /* ---------- Header / navigation ---------- */
 /* The original header is a full-width bar: site title on the
@@ -122,33 +122,136 @@ img { max-width: 100%; height: auto; display: block; }
   margin-bottom: 32px;
 }
 
+/* ---------- Side-by-side rows ---------- */
+/* Several pages on the original put a photo and text next to
+   each other instead of stacked (the Bio hero and About rows,
+   the Lessons intro, the Contact row). One flex row class does
+   all of them: text grows to fill, the photo keeps its width.
+   On narrow screens the row stacks, photo after text. */
+.side-by-side {
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+.side-by-side .side-main { flex: 1; }
+.side-by-side .side-photo { flex: none; width: 42%; }
+@media (max-width: 800px) {
+  .side-by-side { flex-direction: column; }
+  .side-by-side .side-photo { width: 100%; }
+}
+
+/* Bio page hero: the name is set very large in two lines at the
+   left, with the portrait at the right at about 390px wide,
+   exactly the original's arrangement. */
+.bio-hero { align-items: center; }
+.hero-name { font-size: 5.4rem; line-height: 1.05; margin: 0; }
+.bio-hero .side-photo { width: 390px; }
+@media (max-width: 800px) {
+  .hero-name { font-size: 3rem; }
+  .bio-hero .side-photo { width: 100%; }
+}
+
 /* ---------- Press quotes on the Bio page ---------- */
-/* Quote blocks on the original use the heading font and the
-   olive color, so press quotes are Manrope, not italic serif. */
+/* On the original the press quotes are large, set in the dusty
+   rose body color, and centered, with the source attribution
+   centered underneath each one. */
 blockquote {
   font-family: "Manrope", Helvetica, Arial, sans-serif;
   font-weight: 500;
-  font-size: 1.4rem;
+  font-size: 2rem;
   line-height: 1.3;
   letter-spacing: -0.02em;
-  color: #818268;
-  margin: 32px 0 6px;
+  color: #DCB8AC;
+  text-align: center;
+  margin: 40px 0 6px;
 }
-.press-source { color: #818268; margin-bottom: 28px; }
+.press-source { color: #818268; text-align: center; margin-bottom: 32px; }
 
-/* ---------- Gallery grid ---------- */
-/* auto-fit makes the grid reflow on phones with no extra code. */
-.gallery-grid {
+/* ---------- Gallery ---------- */
+/* Centered page headings, like the original's "Photo Gallery"
+   and "Video Gallery" section titles. */
+.center { text-align: center; }
+
+/* The original shows the photos large, in two columns, at their
+   natural shapes (some portrait, some landscape). CSS columns
+   give that masonry feel in a few lines: photos flow down one
+   column and up the next, never cropped. break-inside keeps a
+   photo from splitting across columns. */
+.gallery-cols { columns: 2; column-gap: 20px; }
+.gallery-cols img { width: 100%; margin-bottom: 20px; break-inside: avoid; }
+@media (max-width: 700px) {
+  .gallery-cols { columns: 1; }
+}
+
+/* The two performance videos sit side by side under the photos.
+   Each iframe keeps a 16:9 shape via aspect-ratio, so no fixed
+   pixel height is needed at any screen width. */
+.video-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: 1fr 1fr;
   gap: 20px;
 }
-.gallery-grid img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 700px) {
+  .video-grid { grid-template-columns: 1fr; }
+}
+.video-grid iframe { width: 100%; aspect-ratio: 16 / 9; border: 0; }
 
 /* ---------- Blog ---------- */
+/* The Blog landing page is an index of cards, like the original:
+   featured photo at the left (about 550px), then the date, the
+   title in dusty rose, and an underlined Read More link. */
+.blog-card {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  margin-bottom: 56px;
+}
+.blog-card img { flex: none; width: 550px; }
+.blog-card .card-date { color: #818268; margin-bottom: 8px; }
+.blog-card .card-title { margin: 0 0 12px; }
+.blog-card .card-title a { color: #DCB8AC; text-decoration: none; }
+.blog-card .read-more { text-decoration: underline; }
+@media (max-width: 800px) {
+  .blog-card { flex-direction: column; }
+  .blog-card img { width: 100%; }
+}
+
+/* A single post on its own page. */
 .post { margin-bottom: 64px; }
 .post-date { color: #818268; text-align: center; margin-bottom: 20px; }
 .post img { margin: 24px auto; }
+
+/* ---------- Lessons FAQ ---------- */
+/* On the original the FAQ heading and its questions are small:
+   the questions are ordinary text size, just bold, not big
+   headings. */
+.faq-heading { font-size: 1.4rem; }
+.faq-q { font-weight: 700; color: #818268; margin: 20px 0 6px; }
+
+/* ---------- Contact hero ---------- */
+/* The Contact page opens with the opera-house photo running
+   edge to edge, with the heading and intro text laid over it
+   in white, as on the original. The page's <main> drops its
+   top padding (the .flush-top class) so the photo touches the
+   header bar. */
+.flush-top { padding-top: 0; }
+.contact-hero { position: relative; margin-bottom: 56px; }
+.contact-hero img { width: 100%; height: 480px; object-fit: cover; }
+.contact-hero-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 20px;
+  /* A soft shadow keeps the white text readable over the photo. */
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.45);
+}
+.contact-hero-text h1 { color: #FFF9F0; margin-bottom: 12px; }
+.contact-hero-text p { color: #FFF9F0; max-width: 640px; }
 
 /* Buttons on the original are outline style with square corners:
    a thin olive border and olive text on transparent background,
@@ -171,7 +274,9 @@ footer {
   background: #818268;
   color: #FFF9F0;
   text-align: center;
-  padding: 36px 20px 44px;
+  /* A tall block like the original's footer band, with the
+     social links as plain text links on one line. */
+  padding: 72px 20px 84px;
   font-size: 0.95rem;
 }
 footer a { color: #FFF9F0; margin: 0 10px; }
