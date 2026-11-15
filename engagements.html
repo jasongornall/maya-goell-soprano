@@ -28,13 +28,14 @@ setTimeout(function () {
   }
 }, 2000);
 </script>
-<link rel="stylesheet" href="style.css?t=1794759662">
-<script src="animations.js?t=1794759662" defer></script>
+<link rel="stylesheet" href="style.css?t=1794760291">
+<script src="animations.js?t=1794760291" defer></script>
 </head>
 <body>
 
-<!-- hdr-bold: this page's header starts with the pale sage nav
-     of the original's "bold" section theme (see style.css). -->
+<!-- hdr-bold: a leftover class from an earlier pass; it no
+     longer changes the header's colors (the rendered original
+     shows dark olive nav at the top). See style.css. -->
 <header class="hdr-bold">
   <div class="site-title"><a href="index.html">Maya Goell Soprano</a></div>
   <nav>
@@ -47,7 +48,7 @@ setTimeout(function () {
   </nav>
 </header>
 
-<main class="wrap">
+<main class="wrap page-engagements">
 
   <!-- On the original the title is a bold scaled-text paragraph,
        centered and peach, not a heading; .eng-title in style.css
@@ -65,9 +66,9 @@ setTimeout(function () {
   <div class="calendar-row reveal">
     <div class="cal-box">
       <div class="cal-head">
-        <button type="button" class="cal-arrow" id="cal-prev" aria-label="Previous month">&larr;</button>
+        <button type="button" class="cal-arrow" id="cal-prev" aria-label="Previous month">&#8249;</button>
         <h2 class="cal-title" id="cal-title">Calendar</h2>
-        <button type="button" class="cal-arrow" id="cal-next" aria-label="Next month">&rarr;</button>
+        <button type="button" class="cal-arrow" id="cal-next" aria-label="Next month">&#8250;</button>
       </div>
       <div class="cal-grid" id="cal-grid"></div>
       <div id="cal-events"></div>
@@ -339,10 +340,14 @@ function render() {
   });
 
   // The month's events under the grid, each opening its popup.
+  // An empty month shows NOTHING under the grid: the original's
+  // calendar has no "no events" line (its only empty-state text
+  // lives inside the PosterMyWall widget), so the box is just
+  // left empty.
   var listBox = document.getElementById("cal-events");
   var monthEvents = eventsInMonth(viewYear, viewMonth);
   if (!monthEvents.length) {
-    listBox.innerHTML = '<p class="cal-none">No events scheduled this month.</p>';
+    listBox.innerHTML = "";
     return;
   }
   var items = monthEvents.map(function (ev, idx) {
