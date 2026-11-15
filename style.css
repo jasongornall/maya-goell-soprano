@@ -629,21 +629,26 @@ html.gallery-page, body.gallery-page { overflow-x: clip; }
    85px. */
 .post img.img-gap { margin-top: 100px; margin-bottom: 109px; }
 
-/* The Summer post's Hawk Awards photo: our file IS the
-   original's full image (940x788, the exact dimensions its
-   markup records, checked against its CDN renditions in
-   round 9; there is no taller or wider original to swap
-   in), but the original's block does not show it at its
-   natural shape: rendered there it measures about 915px
-   wide by 475px tall, a wide frame the taller photo is
-   cropped into, with the center focal point (0.5, 0.5) its
-   markup records. So the frame is reproduced here the
-   same way as the Lessons and Contact crops: aspect-ratio
-   plus object-fit cover, centered, at side-by-side widths.
-   The class is on that one photo only. */
-@media (min-width: 801px) {
-  .post img.hawk-photo { width: 100%; aspect-ratio: 915 / 475; object-fit: cover; }
-}
+/* The Summer post's Hawk Awards photo carries NO special
+   rule, deliberately. Our file IS the original's full image
+   (940x788, the exact dimensions its markup records), and
+   a round-9 pass cropped it into a wide 915/475 frame on
+   the strength of screenshot readings; the crop sliced the
+   graphic's own script header ("Hawk Vocal Awards") off
+   the top. Round 10 went back to the original's markup for
+   the block itself: it is marked data-stretch="false", its
+   frame's padding-bottom is 83.8297% (exactly the file's
+   own 788/940 shape), the figure is capped at the file's
+   own 940px, and although the img carries object-fit cover
+   with the recorded center focal point (0.5, 0.5), a frame
+   shaped exactly like the photo has nothing to crop. The
+   figcaption under it is EMPTY in the markup: the "Maya
+   Goell Soprano" line a comparison took for a caption is
+   printed inside the graphic itself, at its bottom left,
+   and the crop was hiding it. So the photo renders at its
+   natural shape under the shared .post img rule, at every
+   width, and the hawk-photo class on the img is only a
+   label saying which photo this note is about. */
 
 /* The Fall post's later section heads (the bold lead-in
    paragraphs after the first) each carry extra air above
@@ -1334,6 +1339,21 @@ button.button { background: none; font: inherit; cursor: pointer; }
    123px from the text. So the row is capped at 633 + 123 +
    622 = 1378px, the text is capped and the photo pinned,
    and space-between puts what is left into the gap. */
+/* The About section starts much lower on the original than
+   here: a round-10 comparison measured about 200px of cream
+   between the hero portrait's bottom and the "About the
+   Artist" heading there, against about 50px here, so the
+   heading and the text column under it sat about 135px too
+   high (the stage photo beside the text already landed
+   right; see the compensation in the .about-photo rule
+   below). The heading's own top margin carries the extra
+   drop: the shared h2 margin (44px) plus the missing 135px.
+   It collapses against the hero row's 40px bottom margin,
+   so the rendered gap grows by the full 135px. Desktop
+   widths only, where the measurement was taken. */
+@media (min-width: 801px) {
+  .about-heading { margin-top: 179px; }
+}
 @media (min-width: 801px) {
   .about-row { max-width: 1378px; justify-content: space-between; }
   .about-row .side-main { flex: 0 1 633px; }
@@ -1341,11 +1361,16 @@ button.button { background: none; font: inherit; cursor: pointer; }
 }
 /* The stage photo starts lower than the text on the original,
    about 146px below the row's top (an earlier pass used 96px
-   and the photo rendered about 50px too high). On phones the
-   row stacks and the offset would just be a gap, so it is
-   desktop only. */
+   and the photo rendered about 50px too high). The heading
+   change above pushes the whole About row 135px further
+   down the page, so this offset drops by the same 135px
+   (146 - 135 = 11): the photo's absolute position, verified
+   against the original in earlier rounds, does not move;
+   only the heading and the text column descend. On phones
+   the row stacks and the offset would just be a gap, so it
+   is desktop only. */
 @media (min-width: 801px) {
-  .about-photo { margin-top: 146px; }
+  .about-photo { margin-top: 11px; }
 }
 
 /* Bio page, "Press": on the original this is a mid-size heading
@@ -1455,9 +1480,15 @@ button.button { background: none; font: inherit; cursor: pointer; }
    measured about 175px from the heading to the first
    expect row against about 50px here, so the heading's
    bottom margin carries that difference the same way (the
-   shared 14px plus the missing 125px). */
+   shared 14px plus the missing 125px). One correction on
+   the top margin since: set to 259px (44 + 215) it
+   RENDERED as only about 230px of gap (round-10
+   comparison), because the margins in the chain above the
+   heading collapse against it and eat the difference, so
+   the margin is 299px and the rendered gap lands on the
+   measured 270px. */
 @media (min-width: 801px) {
-  .expect-heading { margin-top: 259px; margin-bottom: 139px; }
+  .expect-heading { margin-top: 299px; margin-bottom: 139px; }
 }
 /* The expect paragraphs are the original's LARGE text style
    (its markup classes them so): 1.4rem at the shared 1.5
