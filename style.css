@@ -58,7 +58,15 @@ header {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 10px 24px;
-  padding: 24px 4vw;
+  /* The side padding is a fixed 40px, not a viewport
+     fraction: on the rendered original the site title
+     starts about 40px from the window's left edge and the
+     nav ends about 40px from the right (round-7
+     comparison), where the 4vw this rule used to carry put
+     both about 75px in at desktop width. The mobile layout
+     rides the same padding: title and hamburger sit inside
+     it the same way. */
+  padding: 24px 40px;
   background: #FFF9F0;
   /* No shadow and no border under the bar: the original's
      header sits flat on the page (a round-4 comparison caught
@@ -539,22 +547,21 @@ html.gallery-page, body.gallery-page { overflow-x: clip; }
 }
 
 /* A single post on its own page. The original sets a post in
-   a centered column whose width its markup states outright:
-   60% of its section, under the same "narrow" content
-   setting on BOTH posts (checked in both pages' markup), so
-   the two posts do not get different columns. A round-4
-   comparison measured the text running about 500 to 1400px
-   across a 1919px window and 900px was set from that; a
-   round-6 comparison then caught the Summer intro wrapping
-   to 3 lines here against 2 on the original and starting
-   some 50px further right. The intro is the tell: at the
-   shared 16px body size, a check against the real Poppins
-   metrics wraps it to 2 lines only from about 950px up,
-   and a 980px column centered in the wrap starts about
-   470px across the window, where the original's intro
-   starts. So the column is 980px. The Fall post's verified
-   positions were centered or vertical, which a wider
-   centered column leaves where they were. The text itself
+   a centered column under the same "narrow" content
+   setting on BOTH posts (checked in both pages' markup),
+   so the two posts do not get different columns. The
+   column's WIDTH has been read three ways and the rendered
+   page settled it, so the history is worth keeping: a
+   round-4 comparison measured the text running about 500
+   to 1400px across a 1919px window and 900px was set from
+   that; a round-6 pass widened it to 980px on the
+   strength of the markup's 60% figure and a wrap check on
+   the Summer intro; a round-7 comparison then measured
+   the RENDERED original's text on both posts directly
+   (Fall about 495 to 1405, Summer about 500 to 1415,
+   a column of about 910 to 915px) against ours at 980px
+   rendering about 460 to 1440. Rendered wins over the
+   markup reading, so the column is 912px. The text itself
    is centered too; the title and the date/author line
    use the peach body color there, not olive. On the RENDERED
    original the date/author line sits ABOVE the title (a
@@ -572,7 +579,7 @@ html.gallery-page, body.gallery-page { overflow-x: clip; }
    its own centered line above its paragraph (a <br> pair
    does that in the page), in the Summer post they stand
    alone as their own paragraphs. */
-.post { width: 980px; max-width: 100%; margin: 48px auto 64px; text-align: center; }
+.post { width: 912px; max-width: 100%; margin: 48px auto 64px; text-align: center; }
 @media (max-width: 800px) {
   .post { width: auto; }
 }
@@ -605,7 +612,13 @@ html.gallery-page, body.gallery-page { overflow-x: clip; }
    paragraph margin under the text above it, and 86 less
    16 is the 70 the span was short. The first section head
    ("Win two free tickets") takes its air from the Figaro
-   photo's bottom margin above instead. */
+   photo's bottom margin above instead. One later head is
+   the exception: "Practicing... While sick" sits at the
+   normal rhythm on the original (a round-7 comparison
+   verified the wide gap only before "Back to school
+   referral special!", where round 6 had given every later
+   head this class and floated Practicing some 80px low),
+   so that paragraph does not carry the class. */
 .post .post-sec { margin-top: 86px; }
 
 /* A paragraph inside a post that stays left-aligned while
@@ -669,7 +682,25 @@ html.post-page, body.post-page { overflow-x: clip; }
    So the row uses the same breakout as the Gallery videos
    (stretch to 100vw, pull back by half the difference),
    with side padding standing in for the original's small
-   insets from the window's edges. */
+   insets from the window's edges.
+   The title's SIZE is not the h2 size, though the element
+   is an h2 on the original: its own stylesheet sets the
+   pagination title from the heading-3 size value (2.2)
+   through the fluid formula, which at desktop width caps
+   at about 37px (min((2.2 - 1) * 1.2vw + 1rem, max((2.2 -
+   1) * 0.012 * 1459px + 1rem, 2.2rem)) with the site's
+   --maxPageWidth of 1459px). Family, weight and letter
+   spacing are the heading font's (Manrope, 500, -0.02em),
+   the same as ours. This rule used to carry the flat h2
+   size (2.8rem), and a round-7 comparison measured the
+   titles rendering about 15% too wide because of it
+   (Fall's next title about 830px wide starting about 960,
+   against the original's about 710px starting about 1120,
+   with the links' end positions matching). 2.31rem is
+   that 37px cap, and the tablet and phone steps in the
+   Responsive type steps section now step the link with
+   the h3 family, which is what the formula does too
+   (about 27px at 768px). */
 .post-pagination {
   text-align: center;
   margin: 8px 0 64px;
@@ -685,7 +716,7 @@ html.post-page, body.post-page { overflow-x: clip; }
 .post-pagination a {
   font-family: "Manrope", Helvetica, Arial, sans-serif;
   font-weight: 500;
-  font-size: 2.8rem;
+  font-size: 2.31rem;
   letter-spacing: -0.02em;
   color: #DCB8AC;
   text-decoration: none;
@@ -1175,6 +1206,26 @@ button.button { background: none; font: inherit; cursor: pointer; }
    gives mid-size headings. (The quotes under it are styled by
    the Press quotes rules above, not here.) */
 .press-heading { font-size: 2.2rem; color: #C2C293; text-align: center; }
+/* The Press stack breathes much deeper on the original than
+   the shared rhythm gives (round-7 comparison, all measured
+   on the rendered pages): the heading sits about 50px lower,
+   the run from the heading to the first quote is about 120px
+   against about 55px here, and the run from one quote to the
+   next is about 140px against about 90px. Each fix below is
+   the shared margin plus the measured shortfall, and each
+   works because the margins in these chains collapse to the
+   larger one: the heading's top margin (94px over the About
+   row's 40px bottom margin), the first quote's top margin
+   (105px over the heading's 14px bottom margin), and the
+   second quote's top margin (90px over its attribution's
+   32px bottom margin). Desktop widths only, where the
+   measurements were taken; the small-width type steps are
+   untouched. */
+@media (min-width: 801px) {
+  .press-heading { margin-top: 94px; }
+  .press-heading + blockquote { margin-top: 105px; }
+  .press-source + blockquote { margin-top: 90px; }
+}
 
 /* Gallery headings: "Photo Gallery" is a mid-size heading
    (2.2rem) set bold, "Video Gallery" is a full-size one (4rem);
@@ -1252,9 +1303,14 @@ button.button { background: none; font: inherit; cursor: pointer; }
    270px of it there against about 55px on ours, of which
    the shared h2 top margin (44px) is most. The heading's
    own top margin carries the difference at desktop widths:
-   the 44px shared margin plus the missing 215px. */
+   the 44px shared margin plus the missing 215px. The well
+   continues BELOW the heading too: a round-7 comparison
+   measured about 175px from the heading to the first
+   expect row against about 50px here, so the heading's
+   bottom margin carries that difference the same way (the
+   shared 14px plus the missing 125px). */
 @media (min-width: 801px) {
-  .expect-heading { margin-top: 259px; }
+  .expect-heading { margin-top: 259px; margin-bottom: 139px; }
 }
 /* The expect paragraphs are the original's LARGE text style
    (its markup classes them so): 1.4rem at the shared 1.5
@@ -1271,23 +1327,30 @@ button.button { background: none; font: inherit; cursor: pointer; }
   .expect-row .side-main { flex: 0 1 460px; }
   .expect-row-2 .side-main { flex: 0 1 355px; }
 }
-/* Row 2's photo stands in a TALLER frame than its own shape
-   on the original: rendered there it measures about 480px
-   wide by 380px tall, while the photo itself is 1376x768
-   (about 268px tall at that width), and a round-5
-   comparison caught ours showing the short natural shape.
-   The original's CDN was checked for a taller rendition:
-   there is none, 1376x768 is the largest size the source
-   exists at. What the original's block does instead is
-   fill its taller frame and crop, with the image's focal
-   point at its center (0.5, 0.5 in its markup), so the
-   frame below is that same 480/380 shape and object-fit:
-   cover with the default centered position crops ours
-   identically. Row 1's photo keeps its natural shape: its
-   block there is exactly the photo's own proportions.
-   Side-by-side widths only, like the Contact photo's
-   frame; the stacked phone layout keeps natural shapes. */
+/* BOTH expect photos stand in TALLER frames than their own
+   shape on the original, and both blocks fill the frame and
+   crop. Row 2's came first: rendered there it measures
+   about 480px wide by 380px tall, while the photo itself
+   is 1376x768 (about 268px tall at that width), and a
+   round-5 comparison caught ours showing the short natural
+   shape. Row 1's was then believed to keep its natural
+   shape, but a round-7 comparison measured the original's
+   row-1 photo at about 480 by 420 against our natural
+   480 by 270: the same cover-crop, in a taller frame.
+   Rendered wins, so both rows carry frames below. The
+   original's CDN was checked for taller renditions: there
+   are none, 1376x768 is the largest size either source
+   exists at. The crops are centered ones: the original's
+   markup records a center focal point (0.5, 0.5) for BOTH
+   decor images, so object-fit: cover with the default
+   centered position crops ours identically. Row 1's row
+   carries no modifier class of its own (row 2 is the one
+   named .expect-row-2), so its rule keys off the row that
+   is not row 2. Side-by-side widths only, like the Contact
+   photo's frame; the stacked phone layout keeps the
+   natural shapes. */
 @media (min-width: 801px) {
+  .expect-row:not(.expect-row-2) .side-photo { aspect-ratio: 480 / 420; object-fit: cover; }
   .expect-row-2 .side-photo { aspect-ratio: 480 / 380; object-fit: cover; }
 }
 /* At desktop width the expect rows follow the original's own
@@ -1486,6 +1549,13 @@ body.contact-page header { position: fixed; top: 0; left: 0; right: 0; }
 @media (min-width: 1000px) {
   .contact-row { gap: 135px; margin-top: 50px; }
   .contact-row .side-photo { width: 663px; }
+  /* The form itself starts lower than the photo's top on
+     the original: a round-7 comparison found the whole
+     form block (labels, fields, Submit) sitting about
+     45 to 50px too high on ours relative to the hero and
+     the portrait, so the form's column carries its own
+     top margin inside the row. The photo does not move. */
+  .contact-row .side-main { margin-top: 48px; }
 }
 
 /* ---------- Page spacing rhythm ----------
@@ -1565,8 +1635,12 @@ main.page-bio { padding-bottom: 16.5vmax; }
    3.2rem; the pagination links at 2.8rem). The phone
    values below scale with the plain phone steps beside
    them: the video title with the phone h1, the Engagements
-   title and the pagination links with the phone h2, the
-   2.2rem section titles with the phone h3. The three small
+   title with the phone h2, the 2.2rem section titles with
+   the phone h3. The pagination links step with the h3
+   family too: their desktop size turned out to be the
+   original's heading-3 fluid value, not the h2 size (see
+   the pagination rules above), so their steps are the h3
+   steps (1.7rem here, 1.69rem at tablet width). The three small
    olive headings (About, FAQ, calendar) and the press
    quotes' large text are stepped in BOTH blocks for the
    same reason: they sit at their desktop sizes at every
@@ -1580,7 +1654,7 @@ main.page-bio { padding-bottom: 16.5vmax; }
   .video-title { font-size: 2.5rem; }
   .eng-title { font-size: 2rem; }
   .gallery-title, .press-heading, .expect-heading { font-size: 1.7rem; }
-  .post-pagination a { font-size: 2rem; }
+  .post-pagination a { font-size: 1.7rem; }
   .about-heading, .faq-heading, .cal-title { font-size: 1.4rem; }
   blockquote, .press-source { font-size: 1.12rem; }
   /* The post pages' big desktop gaps step down on phones
@@ -1603,7 +1677,7 @@ main.page-bio { padding-bottom: 16.5vmax; }
   .eng-title { font-size: 2.2rem; }
   .gallery-title, .press-heading, .expect-heading { font-size: 1.69rem; }
   .blog-card .card-title { font-size: 2.04rem; }
-  .post-pagination a { font-size: 2.04rem; }
+  .post-pagination a { font-size: 1.69rem; }
   .expect-row .side-main { font-size: 1.23rem; }
   .about-heading, .faq-heading, .cal-title { font-size: 1.35rem; }
   blockquote, .press-source { font-size: 1.23rem; }
