@@ -32,8 +32,8 @@ setTimeout(function () {
   }
 }, 2000);
 </script>
-<link rel="stylesheet" href="style.css?t=1794760291">
-<script src="animations.js?t=1794760291" defer></script>
+<link rel="stylesheet" href="style.css?t=1794762000">
+<script src="animations.js?t=1794762000" defer></script>
 </head>
 <!-- contact-page + hdr-dark: on the original this page's header
      floats over the hero photo with cream text (its "black"
@@ -43,6 +43,11 @@ setTimeout(function () {
 
 <header class="hdr-dark">
   <div class="site-title"><a href="index.html">Maya Goell Soprano</a></div>
+  <!-- Mobile menu button: only shown with JavaScript on, at
+       phone widths (see "Mobile navigation" in style.css). -->
+  <button type="button" class="nav-toggle" aria-expanded="false" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
   <nav>
     <a href="index.html">Bio</a>
     <a href="gallery.html">Gallery</a>
@@ -144,7 +149,14 @@ setTimeout(function () {
                which verifies the widget's token server-side. If
                the widget cannot load (offline, ad blocker), the
                form still submits without a token and the
-               Worker's honeypot and timing checks decide. -->
+               Worker's honeypot and timing checks decide.
+               The widget itself runs in INVISIBLE mode (set on
+               the widget in the Cloudflare account, not here):
+               nothing renders on the form unless Cloudflare
+               decides to challenge the visitor, which is how
+               the original's form looks too. The token still
+               lands in the same hidden field the submit script
+               reads, and the Worker's verification is unchanged. -->
           <div class="cf-turnstile" data-sitekey="0x4AAAAAAGCGCmZhGCLCpM3c"></div>
           <p><button class="button" type="submit">Submit</button></p>
           <p class="form-error" id="form-error" hidden></p>
