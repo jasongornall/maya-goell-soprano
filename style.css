@@ -1242,9 +1242,17 @@ footer a:not(:last-child)::after { content: ","; }
 button.cal-day { font-weight: 700; color: #818268; background: rgba(220, 184, 172, 0.35); cursor: pointer; transition: background-color 0.25s ease; }
 button.cal-day:hover { background: rgba(220, 184, 172, 0.6); }
 /* Today is only a slightly darker cell on the original, not a
-   filled pill: a deeper tint of the cell color, number still
-   pale pink, just bold. */
-.cal-day.today { background: #EDDDD2; font-weight: 700; }
+   filled pill, and the tint is a NEUTRAL grey, not a deeper
+   shade of the warm cell color: the original's own calendar
+   stylesheet (Squarespace's calendar-block-renderer CSS)
+   sets today's cell background to #6e6e6e1a, the grey
+   #6e6e6e at about 10% opacity over the page, where the
+   ordinary day cells get the same grey at about 5%
+   (#6e6e6e0d). Ours carried a warm tan (#EDDDD2) here and
+   read visibly warmer than the original's grey (round-11
+   comparison), so the original's own value it is. The
+   number stays pale pink, just bold. */
+.cal-day.today { background: #6e6e6e1a; font-weight: 700; }
 
 /* The month's events listed under the grid; each entry is a
    button that opens the same popup as clicking the day. */
@@ -1405,6 +1413,20 @@ button.button { background: none; font: inherit; cursor: pointer; }
    of their section theme, not the olive. */
 .gallery-title { font-size: 2.2rem; font-weight: 700; color: #C2C293; }
 .video-title { font-size: 4rem; color: #C2C293; }
+/* The "Video Gallery" heading sits much lower under the
+   photos on the original than the shared heading rhythm
+   puts it: the gap from the bottom of the longer photo
+   column to the heading renders about 177px there against
+   about 70px here (the last photo's own 20px bottom margin
+   plus the shared h2 top margin of 44px), a reading two
+   comparisons in a row agree on (rounds 10 and 11). The
+   heading's top margin carries the missing 107px at
+   desktop widths: 44 + 107 = 151px. The gap BELOW the
+   heading, to the videos, already matches and is not
+   touched (it lives on .video-grid's top margin). */
+@media (min-width: 801px) {
+  .video-title { margin-top: 151px; }
+}
 
 /* Lessons intro: the paragraph beside the piano photo is in
    the accent olive on the original (colored in the text
@@ -1480,15 +1502,18 @@ button.button { background: none; font: inherit; cursor: pointer; }
    measured about 175px from the heading to the first
    expect row against about 50px here, so the heading's
    bottom margin carries that difference the same way (the
-   shared 14px plus the missing 125px). One correction on
-   the top margin since: set to 259px (44 + 215) it
-   RENDERED as only about 230px of gap (round-10
-   comparison), because the margins in the chain above the
-   heading collapse against it and eat the difference, so
-   the margin is 299px and the rendered gap lands on the
-   measured 270px. */
+   shared 14px plus the missing 125px). The top margin has
+   two measured data points now, and they do not sit on a
+   straight line, because the margins in the chain above
+   the heading collapse against it in a way that is not
+   simple addition: at 259px (44 + 215) the rendered gap
+   measured only about 230px (round-10 comparison), and
+   raising it to 299px grew the rendered gap by about
+   88px, to about 315-322px (round-11 comparison), past
+   the original's 270-280px. The margin below is set from
+   those two points to land nearest the original's gap. */
 @media (min-width: 801px) {
-  .expect-heading { margin-top: 299px; margin-bottom: 139px; }
+  .expect-heading { margin-top: 256px; margin-bottom: 139px; }
 }
 /* The expect paragraphs are the original's LARGE text style
    (its markup classes them so): 1.4rem at the shared 1.5
@@ -1792,8 +1817,13 @@ main.page-bio { padding-bottom: 16.5vmax; }
    rendered pages directly and found ours at about 310px
    under the calendar against the original's about 450px,
    so 140px goes back as a fixed addition on top of the
-   vmax term. The 20vmax above the calendar stands. */
-.calendar-row { margin-top: 20vmax; margin-bottom: calc(8.5vmax + 140px); }
+   vmax term. The 20vmax above the calendar stands. One
+   more correction since: a round-11 comparison, measuring
+   from the calendar row's bottom edge to the footer,
+   found ours at about 300px against the original's about
+   355px, so another 55px rides on the fixed term (140px
+   becomes 195px). */
+.calendar-row { margin-top: 20vmax; margin-bottom: calc(8.5vmax + 195px); }
 
 /* The Lessons page keeps its own wider inset on the original:
    its headings and FAQ start about 285px across a 1919px
@@ -1807,11 +1837,14 @@ main.page-bio { padding-bottom: 16.5vmax; }
 /* The Lessons page also ends deeper than the shared rhythm:
    a round-8 comparison measured the cream below the last
    expect row's photo at about 130px on the original against
-   about 40px here, so this page's bottom padding carries
-   the missing 90px on top of the shared 72px. Desktop
-   widths only, where it was measured. */
+   about 40px here, so this page's bottom padding carried
+   the missing 90px on top of the shared 72px (162px in
+   all). That overshot: a round-11 comparison measured the
+   cream at about 210px here against about 125px on the
+   original, so about 85px comes back out. Desktop widths
+   only, where it was measured. */
 @media (min-width: 801px) {
-  main.page-lessons { padding-bottom: 162px; }
+  main.page-lessons { padding-bottom: 77px; }
 }
 
 /* ---------- Responsive type steps ----------
