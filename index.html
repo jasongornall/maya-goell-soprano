@@ -28,17 +28,20 @@ setTimeout(function () {
   }
 }, 2000);
 </script>
-<link rel="stylesheet" href="style.css?t=1794759662">
-<script src="animations.js?t=1794759662" defer></script>
+<link rel="stylesheet" href="style.css?t=1794760291">
+<script src="animations.js?t=1794760291" defer></script>
 </head>
 <body>
 
 <!-- Header and nav are repeated in every page file on purpose:
      with plain static hosting there is no template engine, and
      copy-paste keeps the site build-free and easy to read. -->
-<!-- The hdr-bold class tells style.css this page's header
-     starts with the pale sage nav of the original's "bold"
-     section theme (see "Header colors, per page" there). -->
+<!-- The hdr-bold class is a leftover from an earlier pass:
+     style.css no longer colors the nav sage at the top (the
+     rendered original shows dark olive there), so the class
+     now changes nothing; it stays only as a marker of which
+     pages used to carry it. See "Header colors, per page" in
+     style.css. -->
 <header class="hdr-bold">
   <div class="site-title"><a href="index.html">Maya Goell Soprano</a></div>
   <nav>
@@ -51,20 +54,25 @@ setTimeout(function () {
   </nav>
 </header>
 
-<main class="wrap">
+<main class="wrap page-bio">
 
-  <!-- Hero, arranged like the original: the name very large in
-       two lines, centered in the left column, the portrait at
-       the right. -->
+  <!-- Hero, arranged like the original: the name very large on
+       ONE line at desktop width, centered in the left column,
+       the portrait at the right. There is deliberately no
+       <br> in the name: the original renders it on one line,
+       and on narrow screens it wraps on its own. -->
   <div class="side-by-side bio-hero reveal">
-    <h1 class="hero-name side-main">Maya<br>Goell</h1>
+    <h1 class="hero-name side-main">Maya Goell</h1>
     <img class="side-photo" src="assets/img/headshot-park.jpg" alt="Maya Goell">
   </div>
 
   <!-- About, also side by side like the original: bio text in
        the left column, the stage photo in the right column. -->
   <h2 class="about-heading reveal">About the Artist</h2>
-  <div class="side-by-side">
+  <!-- .about-row carries this row's measured proportions from
+       style.css: a narrower text column and a wider photo
+       than the shared side-by-side layout gives. -->
+  <div class="side-by-side about-row">
     <div class="side-main about-text">
       <p class="reveal">Maya Goell is a soprano based in California. She began her training at the San Francisco School of the Arts where she was named a California Art Scholar and National Youngarts Winner. She went on to earn a Bachelors at the University of British Columbia and a Masters at the San Francisco Conservatory of Music. Highlights of her career include singing La Feau in Ravel&rsquo;s <em>L&rsquo;enfant et les Sortil&egrave;ges</em>, Meg March in Jason Howland&rsquo;s <em>Little Women</em>, Maria Bertram in Jonathan Dove&rsquo;s <em>Mansfield Park</em>, La Contessa di Folleville in Rossini&rsquo;s <em>Il Viaggio a Reims</em>, and Yvette in Mieczys&#322;aw Weinberg&rsquo;s <em>Pasa&#380;erka</em>.</p>
       <p class="reveal">As a multidisciplinary artist who believes in live performance as the bridge between social theory and praxis to evolve the culture we live in, Ms. Goell has worked with leading contemporary composers such as Mason Bates, Ricky Ian Gordan, Ben Moore, and Jodi Goble. She also works with the Bay Area Arts Alliance&rsquo;s Opus Project to frequently perform the works of emerging composers in the Bay Area.</p>
@@ -75,10 +83,14 @@ setTimeout(function () {
   <h2 class="press-heading reveal">Press</h2>
 
   <blockquote class="reveal">&ldquo;Because while &lsquo;Poncho Rabbit&rsquo; might present itself as a children&rsquo;s opera, it tackles some of the most polarizing events gripping the nation today&rdquo;</blockquote>
-  <p class="press-source reveal">&mdash;<a href="https://www.nytimes.com/2026/02/02/arts/music/pancho-rabbit-and-the-coyote-children-opera.html">The New York Times</a></p>
+  <!-- The attributions on the original start with a plain
+       hyphen, no space (checked in its markup: "-The New York
+       Times"), and sit indented past the quote; the indent is
+       the .press-source margin in style.css. -->
+  <p class="press-source reveal">-<a href="https://www.nytimes.com/2026/02/02/arts/music/pancho-rabbit-and-the-coyote-children-opera.html">The New York Times</a></p>
 
   <blockquote class="reveal">&ldquo;Her Susanna appeared shier &hellip; but her crystal-clear vocals and sweet-natured portrayal helped her characterization also stand out.&rdquo;</blockquote>
-  <p class="press-source reveal">&mdash;<a href="https://www.times-advocate.com/articles/the-marriage-of-figaro-a-review/">The Escondido Times-Advocate</a></p>
+  <p class="press-source reveal">-<a href="https://www.times-advocate.com/articles/the-marriage-of-figaro-a-review/">The Escondido Times-Advocate</a></p>
 
 </main>
 
