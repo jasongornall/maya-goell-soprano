@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?t=1794756054">
+<link rel="stylesheet" href="style.css?t=1794756812">
 </head>
 <body>
 
@@ -27,28 +27,37 @@
 
 <main class="wrap">
 
-  <img class="hero-img" src="assets/img/lessons-hero.jpg" alt="Music lessons">
-
+  <!-- Order matches the original: heading first, then the piano
+       photo at the left beside the intro text at the right, with
+       the trial-lesson call to action as a bordered button. -->
   <h1>Music Lessons</h1>
 
-  <p>Looking for a music teacher in San Diego, California? Based in La Jolla, Maya Goell teaches voice, piano, and music theory at all levels.</p>
-  <p><a href="contact.html">Get in touch and book a trial lesson!</a></p>
+  <div class="side-by-side">
+    <img class="side-photo" src="assets/img/lessons-hero.jpg" alt="Music lessons">
+    <div class="side-main">
+      <p>Looking for a music teacher in San Diego, California? Based in La Jolla, Maya Goell teaches voice, piano, and music theory at all levels.</p>
+      <p><a class="button" href="contact.html">Get in touch and book a trial lesson!</a></p>
+    </div>
+  </div>
 
-  <h2>FAQ&rsquo;s</h2>
+  <!-- On the original the FAQ heading and questions are small:
+       questions are plain bold text, not large headings, so they
+       are <p> tags with the .faq-q style here. -->
+  <h2 class="faq-heading">FAQ&rsquo;s</h2>
 
-  <h3>Am I old enough/ good enough/ talented enough to study music?</h3>
+  <p class="faq-q">Am I old enough/ good enough/ talented enough to study music?</p>
   <p>Yes. next question.</p>
 
-  <h3>What instruments do you teach?</h3>
+  <p class="faq-q">What instruments do you teach?</p>
   <p>I specialize in voice, but I also teach piano, guitar, ukulele, and bass.</p>
 
-  <h3>What are your qualifications? Why should I study with you?</h3>
+  <p class="faq-q">What are your qualifications? Why should I study with you?</p>
   <p>There are lots of music teachers out there, so what sets me apart? I am a professional opera singer, so not only do I have a comprehensive understanding of classical vocal technique, but I also know what it takes to make a career out of music. I take pride in helping my students cultivate not only technical ability, but also artistic sensibility, musical literacy, and the joy of music in their artistic practices.</p>
 
-  <h3>What is your experience teaching?</h3>
+  <p class="faq-q">What is your experience teaching?</p>
   <p>I have been teaching in some capacity for more than a decade. I have taught privately as well as with institutions such as Cal State University San Marcos, Leading Note Studios, and am currently a teaching artist with the San Diego Opera.</p>
 
-  <h3>What kinds of music do you teach?</h3>
+  <p class="faq-q">What kinds of music do you teach?</p>
   <p>My wheelhouse is definitely classical style. I have been performing professionally for years, and classically training for more than a decade. That being said, I also have professional experience in a multitude of styles including pop, jazz, and musical theater.</p>
 
   <img class="hero-img" src="assets/img/lessons-decor-1.jpg" alt="">
