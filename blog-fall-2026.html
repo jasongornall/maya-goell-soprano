@@ -9,7 +9,27 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?t=1794758873">
+<!-- Animations, step one of two: this script runs before
+     anything on the page paints and flags the page as
+     "JavaScript is on". That flag is what lets style.css start
+     the .reveal blocks hidden (see the Motion section there);
+     without JavaScript the flag never appears and every block
+     simply shows, so nothing can be left invisible. Step two
+     is animations.js, loaded below, which watches the blocks
+     and reveals each as it scrolls into view. The setTimeout
+     is a safety net: if animations.js ever fails to load, the
+     flag comes back off and the page shows plainly instead of
+     staying hidden. -->
+<script>
+document.documentElement.classList.add("js-reveal");
+setTimeout(function () {
+  if (!window.mayaRevealReady) {
+    document.documentElement.classList.remove("js-reveal");
+  }
+}, 2000);
+</script>
+<link rel="stylesheet" href="style.css?t=1794759662">
+<script src="animations.js?t=1794759662" defer></script>
 </head>
 <body>
 
@@ -37,32 +57,32 @@
        "Autumn Newsletter" stands alone, the rest run into the
        paragraph that follows them. The edits below follow that. -->
   <article class="post">
-    <p class="post-date">Sep 15 &bull; Written by Maya Goell</p>
-    <h1>It&rsquo;s back to School! [Fall 2026]</h1>
+    <p class="post-date reveal">Sep 15 &bull; Written by Maya Goell</p>
+    <h1 class="reveal">It&rsquo;s back to School! [Fall 2026]</h1>
 
-    <p><strong>Autumn Newsletter</strong></p>
-    <p>The summer flew by and just like that, it&rsquo;s my favorite season. Even though the weather is pretty much the same, I get to enjoy pumpkin spiced everything, the opera season is about to start, and all my beloved students come back from their summer adventures!</p>
-    <p>I had a magical time singing my all-time dream role of Susannah in Mozart&rsquo;s <em>Le Nozze di Figaro</em>. I love how funny she is, always playing tricks on the other characters, and she gets a happy ending. Enjoy these fake wedding pictures!</p>
+    <p class="reveal"><strong>Autumn Newsletter</strong></p>
+    <p class="reveal">The summer flew by and just like that, it&rsquo;s my favorite season. Even though the weather is pretty much the same, I get to enjoy pumpkin spiced everything, the opera season is about to start, and all my beloved students come back from their summer adventures!</p>
+    <p class="reveal">I had a magical time singing my all-time dream role of Susannah in Mozart&rsquo;s <em>Le Nozze di Figaro</em>. I love how funny she is, always playing tricks on the other characters, and she gets a happy ending. Enjoy these fake wedding pictures!</p>
 
-    <img src="assets/img/blog-figaro.jpg" alt="Maya Goell as Susanna in Le Nozze di Figaro">
+    <img class="reveal" src="assets/img/blog-figaro.jpg" alt="Maya Goell as Susanna in Le Nozze di Figaro">
 
-    <p><strong>Win two free tickets to my SDO Solo debut</strong> Follow the link below to write me a positive review on Google business and enter a raffle to win two tickets to <em>Rigoletto</em> this October!</p>
-    <p><a class="button" href="https://www.google.com/search?sca_esv=2b321c93e850cbad&amp;kgmid=/g/11yjt9w0cs&amp;q=Studio+of+Maya+Goell&amp;shem=dlvs1,epsd1,ltae,rimspwouoe&amp;shndl=30&amp;source=sh/x/loc/uni/m1/1&amp;kgs=6ebb31ce7a7f32ab&amp;utm_source=dlvs1,epsd1,ltae,rimspwouoe,sh/x/loc/uni/m1/1#lrd=0x888367220093e0e9:0xc3b77dd5ee7367a4,3,,,,">&#128205; Find me on Google Business</a></p>
+    <p class="reveal"><strong>Win two free tickets to my SDO Solo debut</strong> Follow the link below to write me a positive review on Google business and enter a raffle to win two tickets to <em>Rigoletto</em> this October!</p>
+    <p class="reveal"><a class="button" href="https://www.google.com/search?sca_esv=2b321c93e850cbad&amp;kgmid=/g/11yjt9w0cs&amp;q=Studio+of+Maya+Goell&amp;shem=dlvs1,epsd1,ltae,rimspwouoe&amp;shndl=30&amp;source=sh/x/loc/uni/m1/1&amp;kgs=6ebb31ce7a7f32ab&amp;utm_source=dlvs1,epsd1,ltae,rimspwouoe,sh/x/loc/uni/m1/1#lrd=0x888367220093e0e9:0xc3b77dd5ee7367a4,3,,,,">&#128205; Find me on Google Business</a></p>
 
-    <p><strong>Back to school referral special!</strong> Tell your friends about me and for every new student you send my way, I&rsquo;ll gift you one free 60 minute lesson.</p>
+    <p class="reveal"><strong>Back to school referral special!</strong> Tell your friends about me and for every new student you send my way, I&rsquo;ll gift you one free 60 minute lesson.</p>
 
-    <p><strong>Practicing&hellip; While sick</strong> Just the other month I got the nastiest cold. I couldn&rsquo;t talk, let alone sing, even though I had several looming performances and auditions (some I had to cancel). I had to stay sharp, even though I couldn&rsquo;t practice.</p>
-    <p>Prioritize rest, hydrate like a crazy person, and do what you can from there</p>
+    <p class="reveal"><strong>Practicing&hellip; While sick</strong> Just the other month I got the nastiest cold. I couldn&rsquo;t talk, let alone sing, even though I had several looming performances and auditions (some I had to cancel). I had to stay sharp, even though I couldn&rsquo;t practice.</p>
+    <p class="reveal">Prioritize rest, hydrate like a crazy person, and do what you can from there</p>
 
-    <p><strong>Performing</strong> While singing the lead in a three hour long Mozart opera, I kept finding myself so stressed out about this scene or that line. There I was singing my dream role, and I realized I couldn&rsquo;t enjoy it! I forced myself to remember to enjoy the music. Who knows when I&rsquo;ll get to perform this role again?</p>
-    <p>Never forget to have fun!</p>
+    <p class="reveal"><strong>Performing</strong> While singing the lead in a three hour long Mozart opera, I kept finding myself so stressed out about this scene or that line. There I was singing my dream role, and I realized I couldn&rsquo;t enjoy it! I forced myself to remember to enjoy the music. Who knows when I&rsquo;ll get to perform this role again?</p>
+    <p class="reveal">Never forget to have fun!</p>
 
-    <p>Follow me for more<br>Maya Goell</p>
+    <p class="reveal">Follow me for more<br>Maya Goell</p>
   </article>
 
   <!-- The original ends a post with the other post's title as a
        big link (its prev/next pagination). -->
-  <p class="post-pagination"><a href="blog-summer-2026.html">Musical Musings and More [Summer 2026]</a></p>
+  <p class="post-pagination reveal"><a href="blog-summer-2026.html">Musical Musings and More [Summer 2026]</a></p>
 
 </main>
 
